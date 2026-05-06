@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Norlainie Hub">
+<meta name="theme-color" content="#FDF6F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<title>Norlainie · Financial Hub</title>
+<style>
+:root {
+  --rose:       #F2C4CE;
+  --rose-deep:  #D4849A;
+  --blush:      #FAE8EC;
+  --sage:       #C8DDD0;
+  --sage-deep:  #7FA99A;
+  --sky:        #C4D8F0;
+  --sky-deep:   #6A9BC8;
+  --peach:      #F7D9C4;
+  --peach-deep: #C8825A;
+  --lavender:   #DDD4F0;
+  --lav-deep:   #8A7AC0;
+  --cream:      #FDF6F0;
+  --white:      #FFFBF8;
+  --border:     #EDE0D8;
+  --border-soft:#F3EBE6;
+  --text-1:     #3A2820;
+  --text-2:     #7A5C50;
+  --text-3:     #B09080;
+  --inc-bg:     #D8EED8; --inc-txt: #2A5A2A;
+  --exp-bg:     #F5D4D4; --exp-txt: #8A2020;
+  --neu-bg:     #E0D8F5; --neu-txt: #4A3A90;
+  --font-head:  'Cinzel', serif;
+  --font-body:  'Montserrat', sans-serif;
+  --r-sm: 10px; --r-md: 14px; --r-lg: 18px; --r-xl: 24px;
+  --shadow: 0 2px 12px rgba(180,120,100,0.08);
+  --shadow-card: 0 4px 20px rgba(180,120,100,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--cream);min-height:100dvh;overscroll-behavior:none}
+body{font-family:var(--font-body);color:var(--text-1);padding-bottom:env(safe-area-inset-bottom)}
+
+/* ── APP SHELL ── */
+.app{max-width:680px;margin:0 auto;padding:0 16px 40px}
+
+/* ── LOGIN SCREEN ── */
+#login-screen{
+  position:fixed;inset:0;
+  background:linear-gradient(160deg,#FDF0F4 0%,#F5EAF7 50%,#EEF0FB 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;padding:24px;
+  transition:opacity .35s ease;
+}
+#login-screen.fade-out{opacity:0;pointer-events:none}
+.login-logo{font-family:var(--font-head);font-size:28px;font-weight:700;letter-spacing:0.06em;color:var(--text-1);margin-bottom:4px;text-align:center;}
+.login-sub{font-size:11px;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:32px;text-align:center;}
+.login-card{background:white;border-radius:24px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 8px 40px rgba(180,120,100,0.13);}
+.login-step{display:none}
+.login-step.active{display:block}
+.login-field-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;}
+.login-input{width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid var(--border);background:var(--cream);font-size:15px;font-family:var(--font-body);color:var(--text-1);outline:none;transition:border-color .2s;margin-bottom:14px;}
+.login-input:focus{border-color:var(--rose-deep)}
+.login-btn{width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--rose-deep),var(--lav-deep));color:white;font-size:14px;font-weight:700;font-family:var(--font-body);letter-spacing:0.04em;cursor:pointer;transition:opacity .2s;margin-top:4px;}
+.login-btn:active{opacity:0.85}
+.login-err{font-size:12px;color:#A32D2D;text-align:center;margin-top:10px;min-height:18px;font-weight:500;}
+.pin-display{display:flex;justify-content:center;gap:14px;margin-bottom:28px;}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--rose-deep);background:transparent;transition:background .15s;}
+.pin-dot.filled{background:var(--rose-deep)}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:260px;margin:0 auto;}
+.pin-key{aspect-ratio:1;border-radius:50%;border:1.5px solid var(--border);background:var(--cream);font-size:20px;font-weight:600;font-family:var(--font-head);color:var(--text-1);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;-webkit-tap-highlight-color:rgba(212,132,154,0.2);user-select:none;}
+.pin-key:active{background:var(--blush);border-color:var(--rose-deep);transform:scale(0.93)}
+.pin-key.del{font-size:16px;color:var(--text-3)}
+.pin-key.empty{border:none;background:transparent;pointer-events:none}
+.pin-greeting{font-family:var(--font-head);font-size:17px;font-weight:600;color:var(--text-1);text-align:center;margin-bottom:6px;letter-spacing:0.03em;}
+.pin-hint{font-size:11px;color:var(--text-3);text-align:center;margin-bottom:24px;letter-spacing:0.04em;}
+
+
+/* ── TOP HEADER ── */
+.hub-header{
+  padding:20px 0 0;
+  margin-bottom:6px;
+}
+.hub-title{
+  font-family:var(--font-head);
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:0.04em;
+  color:var(--text-1);
+  line-height:1.2;
+}
+.hub-sub{
+  font-size:11px;
+  font-weight:400;
+  color:var(--text-3);
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+
+/* ── BOTTOM TAB BAR (iOS style) ── */
+.nav{
+  display:flex;
+  background:var(--white);
+  border:1px solid var(--border-soft);
+  border-radius:var(--r-xl);
+  padding:6px;
+  gap:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  margin-bottom:18px;
+  flex-wrap:nowrap;
+  box-shadow:var(--shadow);
+}
+.nav::-webkit-scrollbar{display:none}
+.nb{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding:8px 12px;
+  border:none;
+  background:transparent;
+  cursor:pointer !important;
+  border-radius:var(--r-lg);
+  transition:all .2s;
+  color:var(--text-3);
+  position:relative;
+  -webkit-tap-highlight-color:rgba(212,132,154,0.2);
+  user-select:none;
+  -webkit-user-select:none;
+  pointer-events:auto !important;
+  touch-action:manipulation;
+}
+.nb i{font-size:18px;line-height:1}
+.nb-label{font-size:9px;font-weight:600;letter-spacing:0.04em;font-family:var(--font-body);white-space:nowrap;text-transform:uppercase}
+.nb.active{color:var(--rose-deep);background:var(--blush)}
+.nb:active{transform:scale(0.93);background:var(--blush)}
+
+/* ── PANELS ── */
+.panel{display:none;animation:fadeUp .25s ease both}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── SECTION HEADER ── */
+.stitle{
+  font-family:var(--font-head);
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:0.03em;
+  color:var(--text-1);
+  margin-bottom:2px;
+  padding-top:16px;
+}
+.ssub{font-size:11px;color:var(--text-3);margin-bottom:16px;letter-spacing:0.02em}
+
+/* ── CARDS ── */
+.card{
+  background:var(--white);
+  border:1px solid var(--border-soft);
+  border-radius:var(--r-xl);
+  padding:16px 18px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow-card);
+}
+.card-title{font-size:12px;font-weight:600;color:var(--text-2);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px}
+
+/* ── METRIC GRID ── */
+.mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+@media(min-width:480px){.mgrid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}}
+.metric{
+  background:var(--white);
+  border:1px solid var(--border-soft);
+  border-radius:var(--r-lg);
+  padding:14px 14px;
+  box-shadow:var(--shadow);
+}
+.mlabel{font-size:10px;font-weight:500;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px}
+.mval{font-size:20px;font-weight:600;font-family:var(--font-head);color:var(--text-1);letter-spacing:0.01em}
+.msub{font-size:10px;color:var(--text-3);margin-top:3px}
+
+/* ── PROGRESS BARS ── */
+.pbar-bg{height:6px;border-radius:10px;background:var(--border-soft);margin:8px 0 4px}
+.pbar{height:6px;border-radius:10px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* ── INPUT ROW ── */
+.irow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.irow input,.irow select{
+  font-size:13px;font-family:var(--font-body);
+  padding:10px 12px;
+  border-radius:var(--r-md);
+  border:1.5px solid var(--border);
+  background:var(--cream);
+  color:var(--text-1);
+  flex:1;min-width:90px;
+  outline:none;
+  transition:border-color .2s;
+  -webkit-appearance:none;
+}
+.irow input:focus,.irow select:focus{border-color:var(--rose-deep)}
+.irow input::placeholder{color:var(--text-3)}
+
+/* ── BUTTONS ── */
+.pbtn{
+  padding:10px 16px;
+  border-radius:var(--r-md);
+  border:none;
+  background:var(--rose-deep);
+  cursor:pointer !important;
+  font-size:12px;font-weight:600;
+  font-family:var(--font-body);
+  color:#fff;
+  white-space:nowrap;
+  letter-spacing:0.04em;
+  transition:all .2s;
+  box-shadow:0 2px 8px rgba(212,132,154,0.3);
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(212,132,154,0.2);
+  pointer-events:auto !important;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.pbtn:hover{background:#C0708A}
+.pbtn:active{transform:scale(0.95);opacity:0.9}
+.sbtn{
+  padding:8px 14px;
+  border-radius:var(--r-md);
+  border:1.5px solid var(--border);
+  background:var(--white);
+  cursor:pointer !important;
+  font-size:12px;font-weight:500;
+  font-family:var(--font-body);
+  color:var(--text-2);
+  transition:all .18s;
+  touch-action:manipulation;
+  pointer-events:auto !important;
+  -webkit-tap-highlight-color:rgba(212,132,154,0.15);
+}
+.sbtn:active{background:var(--blush);border-color:var(--rose)}
+.dbtn{
+  padding:5px 10px;
+  border-radius:var(--r-sm);
+  border:1px solid var(--border);
+  background:var(--white);
+  cursor:pointer !important;
+  font-size:11px;
+  color:var(--text-3);
+  transition:all .15s;
+  touch-action:manipulation;
+  pointer-events:auto !important;
+  -webkit-tap-highlight-color:rgba(163,45,45,0.1);
+}
+.dbtn:active{background:var(--exp-bg);color:var(--exp-txt);border-color:var(--exp-bg)}
+
+/* ── TABLE ── */
+.tbl{width:100%;font-size:12px;border-collapse:collapse;table-layout:fixed}
+.tbl th{
+  font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text-3);padding:8px 8px;
+  border-bottom:1px solid var(--border-soft);text-align:left;
+}
+.tbl td{padding:10px 8px;border-bottom:1px solid var(--border-soft);color:var(--text-1);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+
+/* ── TAGS ── */
+.tag{display:inline-block;font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;letter-spacing:0.02em;font-family:var(--font-body)}
+.inc{color:var(--inc-txt);background:var(--inc-bg)}
+.exp-neg{color:var(--exp-txt);background:var(--exp-bg)}
+.neutral{color:var(--neu-txt);background:var(--neu-bg)}
+
+/* ── DIVIDER ── */
+.divider{border:none;border-top:1px solid var(--border-soft);margin:14px 0}
+
+/* ── INS REC ── */
+.ins-rec{background:var(--cream);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px;border:1px solid var(--border-soft)}
+.ins-rec-name{font-weight:600;font-size:13px;color:var(--text-1);margin-bottom:3px}
+.ins-rec-detail{color:var(--text-2);font-size:11px;line-height:1.6}
+
+/* ── EMPTY STATE ── */
+.empty{font-size:12px;color:var(--text-3);padding:20px 0;text-align:center;letter-spacing:0.02em}
+
+/* ── DRAW CARD SPECIAL ── */
+.draw-box{
+  border-radius:var(--r-lg);
+  padding:14px 16px;
+  flex:1;min-width:110px;
+}
+.draw-main{
+  background:linear-gradient(135deg,var(--rose) 0%,var(--lavender) 100%);
+  border:1.5px solid var(--rose-deep);
+  border-radius:var(--r-lg);
+  padding:16px;
+  margin-bottom:10px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.draw-main::before{
+  content:'';
+  position:absolute;
+  top:-20px;right:-20px;
+  width:80px;height:80px;
+  background:rgba(255,255,255,0.2);
+  border-radius:50%;
+}
+.draw-amount{
+  font-family:var(--font-head);
+  font-size:32px;
+  font-weight:700;
+  color:var(--text-1);
+  letter-spacing:0.02em;
+}
+.draw-label{font-size:10px;font-weight:600;color:var(--rose-deep);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
+.draw-breakdown{font-size:11px;color:var(--text-2);margin-top:4px}
+
+/* ── BIZ TABS ── */
+.biz-tabs{display:flex;gap:8px;margin-bottom:14px}
+.biz-tab{
+  padding:8px 16px;
+  border-radius:20px;
+  border:1.5px solid var(--border);
+  background:var(--white);
+  cursor:pointer !important;
+  font-size:12px;font-weight:600;
+  font-family:var(--font-body);
+  color:var(--text-3);
+  transition:all .2s;
+  letter-spacing:0.03em;
+  touch-action:manipulation;
+  pointer-events:auto !important;
+  -webkit-tap-highlight-color:rgba(138,122,192,0.2);
+}
+.biz-tab.active-tab{background:var(--lavender);border-color:var(--lav-deep);color:var(--lav-deep)}
+.biz-tab:active{background:var(--lavender)}
+
+/* ── SAVINGS TABS ── */
+#savtab-personal.active-tab{background:var(--blush);border-color:var(--rose-deep);color:var(--rose-deep)}
+#savtab-business.active-tab{background:var(--lavender);border-color:var(--lav-deep);color:var(--lav-deep)}
+/* ── BANK TABS ── */
+#banktab-personal.active-tab{background:var(--blush);border-color:var(--rose-deep);color:var(--rose-deep)}
+#banktab-business.active-tab{background:var(--lavender);border-color:var(--lav-deep);color:var(--lav-deep)}
+.filter-sel{
+  font-size:12px;font-family:var(--font-body);
+  padding:6px 10px;
+  border-radius:20px;
+  border:1.5px solid var(--border);
+  background:var(--white);
+  color:var(--text-2);
+  outline:none;
+  -webkit-appearance:none;
+}
+.filter-sel:focus{border-color:var(--rose-deep)}
+
+/* ── SAVINGS BUCKET CARD ── */
+.bucket-card{
+  background:var(--white);
+  border:1px solid var(--border-soft);
+  border-radius:var(--r-lg);
+  padding:14px 16px;
+  margin-bottom:10px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.bucket-card::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:4px;
+  background:var(--color-accent,#D4849A);
+  border-radius:4px 0 0 4px;
+}
+
+/* ── PULSE ANIMATION for draw ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+/* ── SCROLLABLE page content so bottom nav doesn't obscure */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ── iOS tap fix — ensure all interactive elements work on iPhone */
+a,button,select,input,[onclick]{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(212,132,154,0.15);
+  cursor:pointer;
+}
+button{-webkit-appearance:none;}
+</style>
+<!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="login-screen">
+  <div class="login-logo">Financial Hub</div>
+  <div class="login-sub">Norlainie Salim Jamal</div>
+  <div class="login-card">
+
+    <!-- STEP 1: Username + Password -->
+    <div class="login-step" id="login-step-1">
+      <div class="login-field-label">Username</div>
+      <input class="login-input" id="login-user" type="text" placeholder="Enter username" autocomplete="username" autocapitalize="none"/>
+      <div class="login-field-label">Password</div>
+      <input class="login-input" id="login-pass" type="password" placeholder="Enter password" autocomplete="current-password"/>
+      <button class="login-btn" onclick="checkLogin()">Continue</button>
+      <div class="login-err" id="login-err"></div>
+    </div>
+
+    <!-- STEP 2: PIN -->
+    <div class="login-step" id="login-step-2">
+      <div class="pin-greeting">Welcome back, Norlainie</div>
+      <div class="pin-hint">Enter your 6-digit PIN</div>
+      <div class="pin-display" id="pin-dots"></div>
+      <div class="pin-grid" id="pin-grid"></div>
+      <div class="login-err" id="pin-err"></div>
+    </div>
+
+  </div>
+</div>
+<h2 class="sr-only">Norlainie Financial Hub — savings, bank accounts, expenses, budget, business, insurance</h2>
+<div class="app">
+<div class="hub-header" style="display:flex;justify-content:space-between;align-items:center">
+  <div>
+    <div class="hub-title">Financial Hub</div>
+    <div class="hub-sub">Norlainie Salim Jamal · Empire Plan 2026–2037</div>
+  </div>
+  <button id="undo-btn" onclick="undo()" disabled style="
+    display:flex;align-items:center;gap:5px;
+    padding:8px 13px;border-radius:var(--r-md);
+    border:1.5px solid var(--border);
+    background:var(--white);
+    font-size:11px;font-weight:600;font-family:var(--font-body);
+    color:var(--text-3);letter-spacing:0.04em;
+    transition:all .2s;touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(212,132,154,0.2);
+  "><i class="ti ti-arrow-back-up"></i> Undo</button>
+</div>
+<div class="nav">
+  <button class="nb active" onclick="show('dash')" id="nb-dash"><i class="ti ti-layout-dashboard"></i><span class="nb-label">Home</span></button>
+  <button class="nb" onclick="show('savings')" id="nb-savings" style="padding:6px 10px">
+    <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto">
+      <path d="M4.2 10.5 Q2 8.5 2.8 6 Q3.8 3.5 2.8 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+      <ellipse cx="11.5" cy="11.5" rx="7" ry="5.5" fill="currentColor" opacity="0.15"/>
+      <ellipse cx="11.5" cy="11.5" rx="7" ry="5.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+      <ellipse cx="7.8" cy="6.8" rx="1.7" ry="2.2" fill="currentColor" opacity="0.2" transform="rotate(-12 7.8 6.8)"/>
+      <ellipse cx="7.8" cy="6.8" rx="1.7" ry="2.2" stroke="currentColor" stroke-width="1.2" fill="none" transform="rotate(-12 7.8 6.8)"/>
+      <rect x="9.5" y="5.8" width="3.5" height="1.1" rx="0.55" fill="currentColor" opacity="0.65"/>
+      <circle cx="10" cy="10" r="0.9" fill="currentColor" opacity="0.55"/>
+      <ellipse cx="17.5" cy="12" rx="2.3" ry="1.8" stroke="currentColor" stroke-width="1.3" fill="none"/>
+      <circle cx="16.6" cy="11.6" r="0.45" fill="currentColor"/>
+      <circle cx="18.3" cy="11.6" r="0.45" fill="currentColor"/>
+      <rect x="8" y="15.8" width="2.2" height="2.7" rx="1.1" fill="currentColor" opacity="0.45"/>
+      <rect x="11.5" y="15.8" width="2.2" height="2.7" rx="1.1" fill="currentColor" opacity="0.45"/>
+      <rect x="15" y="15.8" width="2.2" height="2.7" rx="1.1" fill="currentColor" opacity="0.45"/>
+    </svg>
+    <span class="nb-label">Savings</span>
+  </button>
+  <button class="nb" onclick="show('bank')" id="nb-bank"><i class="ti ti-building-bank"></i><span class="nb-label">Bank</span></button>
+  <button class="nb" onclick="show('expenses')" id="nb-expenses"><i class="ti ti-receipt"></i><span class="nb-label">Expenses</span></button>
+  <button class="nb" onclick="show('budget')" id="nb-budget"><i class="ti ti-calculator"></i><span class="nb-label">Budget</span></button>
+  <button class="nb" onclick="show('biz')" id="nb-biz"><i class="ti ti-briefcase"></i><span class="nb-label">Business</span></button>
+  <button class="nb" onclick="show('ecom')" id="nb-ecom"><i class="ti ti-shopping-cart"></i><span class="nb-label">Ecom</span></button>
+  <button class="nb" onclick="show('ins')" id="nb-ins"><i class="ti ti-shield"></i><span class="nb-label">Insurance</span></button>
+  <button class="nb" onclick="show('ledger')" id="nb-ledger"><i class="ti ti-notebook"></i><span class="nb-label">Ledger</span></button>
+  <button class="nb" onclick="show('roadmap')" id="nb-roadmap"><i class="ti ti-map"></i><span class="nb-label">Roadmap</span></button>
+  <button class="nb" onclick="show('eumi')" id="nb-eumi"><i class="ti ti-diamond"></i><span class="nb-label">Eumi</span></button>
+  <button class="nb" onclick="show('caziel')" id="nb-caziel"><i class="ti ti-crown"></i><span class="nb-label">Caziél</span></button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="panel active" id="panel-dash">
+  <div class="mgrid" id="dash-metrics"></div>
+  <div class="card">
+    <div class="card-title">Savings Overview</div>
+    <div id="dash-savings"></div>
+  </div>
+  <div class="card" id="dash-draw-card">
+    <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span>Owner's Draw</span><span style="font-size:10px;padding:3px 10px;border-radius:20px;background:var(--neu-bg);color:var(--neu-txt);font-weight:600">This month</span>
+    </div>
+    <div id="dash-draw"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recent Expenses</div>
+    <div id="dash-expenses"></div>
+  </div>
+</div>
+
+<!-- SAVINGS -->
+<div class="panel" id="panel-savings">
+  <div class="stitle">Savings</div>
+  <div class="ssub">Track how much you've set aside — no deadlines, just progress</div>
+
+  <!-- Personal / Business subcategory tabs -->
+  <div class="biz-tabs" style="margin-top:14px;margin-bottom:4px">
+    <button class="biz-tab active-tab" id="savtab-personal" onclick="setSavTab('personal')" style="background:var(--blush);border-color:var(--rose-deep);color:var(--rose-deep)">
+      <i class="ti ti-user" style="font-size:13px;margin-right:4px"></i>Personal
+    </button>
+    <button class="biz-tab" id="savtab-business" onclick="setSavTab('business')">
+      <i class="ti ti-briefcase" style="font-size:13px;margin-right:4px"></i>Business
+    </button>
+  </div>
+
+  <div id="savings-list"></div>
+  <div class="card">
+    <div class="card-title">Add Savings</div>
+    <div class="irow">
+      <select id="sav-sel" style="flex:1.5"></select>
+      <input type="number" id="sav-amt" placeholder="Amount (₱)" style="flex:1;min-width:110px">
+      <button class="pbtn" onclick="addSaving()"><i class="ti ti-plus" aria-hidden="true"></i> Add</button>
+    </div>
+    <div class="divider"></div>
+    <div class="card-title">New Savings Bucket</div>
+    <div class="irow">
+      <input id="sav-name-in" placeholder="Name (e.g. Emergency Fund)" style="flex:1.5">
+      <input type="number" id="sav-target-in" placeholder="Target amount (₱) — optional" style="flex:1.2;min-width:120px">
+      <select id="sav-color-in" style="flex:1">
+        <option value="purple">Purple</option>
+        <option value="teal">Teal</option>
+        <option value="blue">Blue</option>
+        <option value="amber">Amber</option>
+        <option value="coral">Coral</option>
+        <option value="pink">Pink</option>
+      </select>
+      <select id="sav-cat-in" style="flex:1">
+        <option value="personal">Personal</option>
+        <option value="business">Business</option>
+      </select>
+      <button class="pbtn" onclick="addBucket()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- BANK ACCOUNTS -->
+<div class="panel" id="panel-bank">
+  <div class="stitle">Bank accounts</div>
+  <div class="ssub">Every transaction auto-posts to the ledger</div>
+
+  <!-- Personal / Business bank tabs -->
+  <div class="biz-tabs" style="margin-bottom:14px">
+    <button class="biz-tab active-tab" id="banktab-personal" onclick="setBankTab('personal')">
+      <i class="ti ti-user" style="font-size:13px;margin-right:4px"></i>Personal
+    </button>
+    <button class="biz-tab" id="banktab-business" onclick="setBankTab('business')">
+      <i class="ti ti-briefcase" style="font-size:13px;margin-right:4px"></i>Business
+    </button>
+  </div>
+
+  <div class="mgrid" id="bank-summary"></div>
+  <div id="bank-accounts-list"></div>
+
+  <div class="card">
+    <div class="card-title">Add Bank Account</div>
+    <div class="irow">
+      <input id="bank-name-in" placeholder="Account name (e.g. BDO Savings)" style="flex:1.5">
+      <select id="bank-type-in" style="flex:1">
+        <option value="Savings">Savings</option>
+        <option value="Checking">Checking</option>
+        <option value="E-wallet">E-wallet</option>
+        <option value="Business">Business</option>
+      </select>
+      <select id="bank-ledger-in" style="flex:1">
+        <option value="personal">Personal</option>
+        <option value="caziel">Caziél</option>
+        <option value="eumi">Eumi</option>
+        <option value="informal">Informal Biz</option>
+      </select>
+      <input type="number" id="bank-bal-in" placeholder="Current balance (₱)" style="flex:1;min-width:120px">
+      <button class="pbtn" onclick="addBankAccount()">Add</button>
+    </div>
+  </div>
+  <div class="card" id="txn-card">
+    <div class="card-title">Log Transaction</div>
+    <div class="irow">
+      <select id="txn-acct" style="flex:1.5"></select>
+      <select id="txn-type" style="flex:1">
+        <option value="deposit">Deposit</option>
+        <option value="withdrawal">Withdrawal</option>
+      </select>
+      <input type="number" id="txn-amt" placeholder="Amount (₱)" style="flex:1;min-width:100px">
+      <input id="txn-note" placeholder="Note" style="flex:1.5">
+      <input type="date" id="txn-date" style="flex:1;min-width:120px">
+      <button class="pbtn" onclick="logTxn()">Log</button>
+    </div>
+    <div style="margin-top:12px" id="txn-log"></div>
+  </div>
+</div>
+
+<!-- EXPENSES -->
+<div class="panel" id="panel-expenses">
+  <div class="stitle">Expenses</div>
+  <div class="ssub">Log and categorize every peso that goes out</div>
+  <div class="mgrid" id="exp-summary"></div>
+  <div class="card">
+    <div class="card-title">Log Expense</div>
+    <div class="irow">
+      <input id="exp-desc" placeholder="Description" style="flex:1.5">
+      <input type="number" id="exp-amt" placeholder="Amount (₱)" style="flex:1;min-width:100px">
+      <select id="exp-cat" style="flex:1.2">
+        <option value="Food">Food</option>
+        <option value="Transport">Transport</option>
+        <option value="Education">Education</option>
+        <option value="Child">Child / Family</option>
+        <option value="Business">Business</option>
+        <option value="Trade Fair">Trade Fair</option>
+        <option value="Travel">Business Travel</option>
+        <option value="Health">Health / Insurance</option>
+        <option value="Utilities">Utilities / Bills</option>
+        <option value="Personal">Personal</option>
+        <option value="Other">Other</option>
+      </select>
+      <input type="date" id="exp-date" style="flex:1;min-width:120px">
+      <button class="pbtn" onclick="addExpense()">Log</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:500;color:var(--text-1)">All expenses</div>
+      <select id="exp-filter" onchange="renderExpenses()" class="filter-sel">
+        <option value="All">All categories</option>
+        <option value="Food">Food</option>
+        <option value="Transport">Transport</option>
+        <option value="Education">Education</option>
+        <option value="Child">Child / Family</option>
+        <option value="Business">Business</option>
+        <option value="Trade Fair">Trade Fair</option>
+        <option value="Travel">Business Travel</option>
+        <option value="Health">Health / Insurance</option>
+        <option value="Utilities">Utilities / Bills</option>
+        <option value="Personal">Personal</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <table class="tbl">
+      <thead><tr><th style="width:35%">Description</th><th style="width:20%">Category</th><th style="width:20%">Amount</th><th style="width:15%">Date</th><th style="width:10%"></th></tr></thead>
+      <tbody id="exp-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- BUDGET -->
+<div class="panel" id="panel-budget">
+  <div class="stitle">Monthly budget planner</div>
+  <div class="ssub">50/30/20 rule — adapted for your income and empire goals</div>
+  <div class="card">
+    <div class="irow" style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:600;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">Monthly Income (₱)</label>
+      <input type="number" id="income-in" value="80000" style="flex:1;max-width:160px" oninput="renderBudget()">
+    </div>
+    <div id="budget-breakdown"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recommended Allocation</div>
+    <div id="budget-reco"></div>
+  </div>
+</div>
+
+<!-- BUSINESS -->
+<div class="panel" id="panel-biz">
+  <div class="stitle">Business tracker</div>
+  <div class="ssub">Caziél · Eumi · Informal — each tracked separately, each with their own ledger</div>
+  <div class="biz-tabs">
+    <button class="biz-tab" id="bt-caziel" onclick="setBiz('caziel')">Caziél Fine Jewelry</button>
+    <button class="biz-tab" id="bt-eumi" onclick="setBiz('eumi')">Eumi</button>
+    <button class="biz-tab" id="bt-informal" onclick="setBiz('informal')">Informal Business</button>
+  </div>
+  <div class="mgrid" id="biz-metrics"></div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th style="width:40%">Description</th><th style="width:18%">Type</th><th style="width:22%">Amount</th><th style="width:20%">Action</th></tr></thead>
+      <tbody id="biz-tbody"></tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Log Entry</div>
+    <div class="irow">
+      <input id="biz-desc" placeholder="Description" style="flex:1.5">
+      <select id="biz-type" style="flex:1">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <input type="number" id="biz-amt" placeholder="Amount (₱)" style="flex:1;min-width:100px">
+      <button class="pbtn" onclick="addBizEntry()">Log</button>
+    </div>
+  </div>
+</div>
+
+<!-- ECOMMERCE -->
+<div class="panel" id="panel-ecom">
+  <div class="stitle">E-commerce withdrawals</div>
+  <div class="ssub">Log every payout from your ecommerce store — every 2 days</div>
+  <div class="mgrid" id="ecom-metrics"></div>
+  <div class="card">
+    <div class="card-title">Log Withdrawal / Payout</div>
+    <div class="irow">
+      <select id="ecom-platform" style="flex:1">
+        <option value="Shopee">Shopee</option>
+        <option value="Lazada">Lazada</option>
+        <option value="TikTok Shop">TikTok Shop</option>
+        <option value="Other">Other</option>
+      </select>
+      <input type="number" id="ecom-gross" placeholder="Gross sales (₱)" style="flex:1;min-width:110px">
+      <input type="number" id="ecom-fees" placeholder="Platform fees (₱)" style="flex:1;min-width:110px">
+      <input type="date" id="ecom-date" style="flex:1;min-width:120px">
+      <button class="pbtn" onclick="addEcom()"><i class="ti ti-plus"></i> Log</button>
+    </div>
+    <div style="font-size:11px;color:var(--text-2);margin-top:6px">Net payout = Gross − Fees. This feeds into your Owner's Draw calculator automatically.</div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:500;color:var(--text-1)">Payout history</div>
+      <select id="ecom-filter" onchange="renderEcom()" class="filter-sel">
+        <option value="All">All platforms</option>
+        <option value="Shopee">Shopee</option>
+        <option value="Lazada">Lazada</option>
+        <option value="TikTok Shop">TikTok Shop</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <table class="tbl">
+      <thead><tr><th style="width:22%">Platform</th><th style="width:22%">Gross</th><th style="width:22%">Fees</th><th style="width:22%">Net</th><th style="width:12%">Date</th><th></th></tr></thead>
+      <tbody id="ecom-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- INSURANCE -->
+<div class="panel" id="panel-ins">
+  <div class="stitle">Insurance & protection</div>
+  <div class="ssub">Your policies + child education plan recommendations</div>
+  <div class="card">
+    <div class="card-title">Active Policies</div>
+    <table class="tbl">
+      <thead><tr><th style="width:28%">Policy</th><th style="width:20%">Provider</th><th style="width:18%">Premium/mo</th><th style="width:16%">Renewal</th><th style="width:18%">Action</th></tr></thead>
+      <tbody id="ins-tbody"></tbody>
+    </table>
+    <div class="divider"></div>
+    <div class="card-title">Add Policy</div>
+    <div class="irow">
+      <input id="ins-name" placeholder="Policy name" style="flex:1.5">
+      <input id="ins-provider" placeholder="Provider" style="flex:1">
+      <input type="number" id="ins-premium" placeholder="Monthly premium (₱)" style="flex:1;min-width:120px">
+      <input type="month" id="ins-due" style="flex:1;min-width:110px">
+      <button class="pbtn" onclick="addIns()">Add</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Education Plan (Child)</div>
+    <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;letter-spacing:0.02em">Kinder next year · goal: fully covered through college</div>
+    <div class="ins-rec"><div class="ins-rec-name">Sun Life — Bright Start</div><div class="ins-rec-detail">Education endowment + life insurance. Matures at college entry. Est. ₱2,500–₱5,000/month.</div></div>
+    <div class="ins-rec"><div class="ins-rec-name">AXA Philippines — StartSmart</div><div class="ins-rec-detail">Variable life + education benefit. Includes parent waiver — policy continues if breadwinner passes. Est. ₱3,000–₱6,000/month.</div></div>
+    <div class="ins-rec"><div class="ins-rec-name">Pru Life UK — PRULink Edu Protector</div><div class="ins-rec-detail">Investment-linked plan. Flexible fund allocation. Est. ₱2,800–₱5,500/month.</div></div>
+    <button class="sbtn" style="margin-top:8px" onclick="sendPrompt('Compare Sun Life Bright Start, AXA StartSmart, and Pru Life PRULink Edu Protector for a child starting Kinder next year in the Philippines.')">Compare these plans in detail ↗</button>
+  </div>
+  <div class="card">
+    <div class="card-title">Personal Coverage</div>
+    <div style="font-size:11px;color:var(--text-2);margin-bottom:12px">Self-employed founder + Harvard-bound — you need protection during your empire years</div>
+    <div class="ins-rec"><div class="ins-rec-name">Life insurance — term or VUL</div><div class="ins-rec-detail">Min ₱2M–₱5M coverage. Critical during Harvard years when Caziél runs without you.</div></div>
+    <div class="ins-rec"><div class="ins-rec-name">HMO — Maxicare or MediCard</div><div class="ins-rec-detail">Individual plan. ₱800–₱1,500/month. No employer HMO as a founder — this protects your savings.</div></div>
+    <div class="ins-rec"><div class="ins-rec-name">Caziél business insurance</div><div class="ins-rec-detail">Product liability + business interruption. Malayan or Pioneer micro-business package. Est. ₱5,000–₱15,000/year.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- LEDGER -->
+<div class="panel" id="panel-ledger">
+  <div class="stitle">Ledger</div>
+  <div class="ssub">Auto-generated from bank transactions — no manual entry needed</div>
+  <div class="biz-tabs" style="flex-wrap:wrap">
+    <button class="biz-tab ledger-tab active-tab" id="lt-personal" onclick="setLedger('personal')">Personal</button>
+    <button class="biz-tab ledger-tab" id="lt-caziel" onclick="setLedger('caziel')">Caziél</button>
+    <button class="biz-tab ledger-tab" id="lt-eumi" onclick="setLedger('eumi')">Eumi</button>
+    <button class="biz-tab ledger-tab" id="lt-informal" onclick="setLedger('informal')">Informal</button>
+  </div>
+  <div class="mgrid" id="ledger-metrics"></div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+      <div style="font-size:13px;font-weight:500;color:var(--text-1)" id="ledger-title">Personal Ledger</div>
+      <button class="sbtn" onclick="exportLedger()" style="display:flex;align-items:center;gap:5px"><i class="ti ti-download"></i> Export CSV</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl" style="min-width:480px">
+        <thead><tr>
+          <th style="width:13%">Date</th>
+          <th style="width:15%">Account</th>
+          <th style="width:28%">Description</th>
+          <th style="width:12%">Type</th>
+          <th style="width:16%">Amount</th>
+          <th style="width:16%">Balance</th>
+        </tr></thead>
+        <tbody id="ledger-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EMPIRE ROADMAP -->
+<div class="panel" id="panel-roadmap">
+  <div class="stitle">Empire Roadmap</div>
+  <div class="ssub">Norlainie Salim Jamal · 2026–2037 · From Founder to Dr. Norlainie</div>
+
+  <!-- At a Glance -->
+  <div class="card" style="background:linear-gradient(135deg,var(--lavender) 0%,var(--blush) 100%);border-color:var(--lav-deep)">
+    <div class="card-title" style="color:var(--lav-deep)">The Vision</div>
+    <div style="font-size:13px;color:var(--text-1);line-height:1.7;font-style:italic;margin-bottom:12px">"From Founder to Dr. Norlainie Salim Jamal — every step is intentional, every pivot is data, every year has a purpose."</div>
+    <div style="font-size:11px;color:var(--text-2)">At 40: Harvard MBA · Harvard Doctorate · GIA Graduate Gemologist · FGA Fellow · Founder of Caziél Fine Jewelry. Sitting at the most elite table in the world. <strong>Deserving. Unquestionable.</strong></div>
+  </div>
+
+  <!-- Credential table -->
+  <div class="card">
+    <div class="card-title">Credentials at a Glance</div>
+    <div style="overflow-x:auto">
+      <table class="tbl" style="min-width:420px">
+        <thead><tr><th>Credential</th><th>Programme</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>Undergraduate</td><td>ETEEAP — BSBA Marketing / Operations</td><td style="font-size:11px">LPU · 2026–2028</td></tr>
+          <tr><td>Gemology I</td><td>GIA Graduate Gemologist (GG)</td><td style="font-size:11px">GIA · 2026–2030</td></tr>
+          <tr><td>MBA</td><td>Harvard Business School</td><td style="font-size:11px">Boston · 2028–2030</td></tr>
+          <tr><td>Gemology II</td><td>FGA — Gemmological Association</td><td style="font-size:11px">Gem-A · 2030–2033</td></tr>
+          <tr><td>Doctorate</td><td>Harvard PhD / DBA</td><td style="font-size:11px">Harvard · 2033–2037</td></tr>
+          <tr><td>Brand</td><td>RJC — Responsible Jewellery Council</td><td style="font-size:11px">Caziél · 2030+</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="card" style="border-left:4px solid var(--sage-deep);padding-left:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="card-title" style="margin-bottom:0;color:var(--sage-deep)">Phase 01 · The Foundation</div>
+      <span class="tag" style="background:var(--sage);color:var(--sage-deep)">2026–2028 · Ages 29–31</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:6px">Academic Launchpad · Baliuag, Bulacan</div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.8">
+      <div>📚 <strong>ETEEAP BSBA</strong> — leverage 8+ years of BPO + business ownership experience for degree equivalency at LPU. Target: 2028.</div>
+      <div>💎 <strong>GIA AJP + GG Theory</strong> — complete Applied Jewelry Professional and begin Graduate Gemologist online modules. 1 hour/night, self-paced.</div>
+      <div>📊 <strong>GMAT Prep (700+)</strong> — 12-month rolling plan. Analytics background = advantage in Quant. Target: 700–730+.</div>
+      <div>🤖 <strong>Caziél Automation</strong> — build ops manual, automate trackers and order flow, hire part-time VA before Harvard departure.</div>
+    </div>
+    <div style="margin-top:10px;padding:8px 12px;background:var(--sage);border-radius:var(--r-md);font-size:11px;color:var(--inc-txt);font-weight:500">🎯 End Goal: BSBA degree + GMAT score in hand. Caziél runs without you.</div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="card" style="border-left:4px solid var(--lav-deep);padding-left:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="card-title" style="margin-bottom:0;color:var(--lav-deep)">Phase 02 · Harvard &amp; GIA Immersion</div>
+      <span class="tag" style="background:var(--lavender);color:var(--lav-deep)">2028–2030 · Ages 31–33</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:6px">Full Transformation · Boston, Massachusetts</div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.8">
+      <div>🏫 <strong>Harvard MBA Application (2027–2028)</strong> — apply early action. Your story: Muslim Filipina luxury founder, working mom, BPO-to-Caziél. Rare and powerful. Apply for need-based financial aid — Harvard is need-blind.</div>
+      <div>🎓 <strong>Harvard MBA — 2 Years Full-Time</strong> — use the i-Lab for Caziél global strategy, cross-register at Harvard Graduate School of Design, build your luxury + finance network actively.</div>
+      <div>💎 <strong>GIA GG — Summer &amp; Winter Breaks</strong> — GIA New York campus is 4 hours from Boston. Complete GG lab requirements every semester break. Target: GG title before MBA ends in 2030.</div>
+    </div>
+    <div style="margin-top:10px;padding:8px 12px;background:var(--lavender);border-radius:var(--r-md);font-size:11px;color:var(--lav-deep);font-weight:500">🎯 End Goal: Norlainie Salim Jamal, MBA (Harvard), GG (GIA) — one of the most credentialed jewelry professionals in Southeast Asia.</div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="card" style="border-left:4px solid var(--sky-deep);padding-left:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="card-title" style="margin-bottom:0;color:var(--sky-deep)">Phase 03 · Global Expansion &amp; FGA</div>
+      <span class="tag" style="background:var(--sky);color:var(--sky-deep)">2030–2033 · Ages 33–36</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:6px">Luxury Presence · US, Europe, or Asia Pacific</div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.8">
+      <div>🌍 <strong>Caziél International Launch</strong> — use Harvard alumni network + GG credentials. Target Dubai (21K gold cultural standard), London, New York. Enter JCK Las Vegas, Couture Las Vegas, Baselworld.</div>
+      <div>🔬 <strong>FGA Title</strong> — Fellow of the Gemmological Association (Gem-A). The most scientific gemology credential globally. Pairs with GG: opens university teaching, expert witness, international appraisal.</div>
+      <div>✅ <strong>RJC Certification</strong> — ethical sourcing cert. Major selling point in European + US luxury markets. Begin application 2031 — takes 1–2 years.</div>
+      <div>✍️ <strong>Thought Leadership</strong> — speaking at JCK, Baselworld. Write for WWD, Business of Fashion, Rapaport. Build authority in ethical luxury + Southeast Asian gemstones.</div>
+    </div>
+    <div style="margin-top:10px;padding:8px 12px;background:var(--sky);border-radius:var(--r-md);font-size:11px;color:var(--sky-deep);font-weight:500">🎯 End Goal: Caziél is a recognized international luxury brand. You are a credentialed, published global voice.</div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="card" style="border-left:4px solid var(--rose-deep);padding-left:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="card-title" style="margin-bottom:0;color:var(--rose-deep)">Phase 04 · Doctorate &amp; Legacy</div>
+      <span class="tag" style="background:var(--blush);color:var(--rose-deep)">2033–2037 · Ages 36–40</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:6px">Thought Leader · Harvard University</div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.8">
+      <div>🎓 <strong>Harvard PhD / DBA — Fully Funded</strong> — living stipend ~$30K–40K/year. Research areas: ethical luxury in post-colonial SE Asian markets, gemstone blockchain provenance, Muslim women in global luxury, artisanal fine jewelry economics.</div>
+      <div>🏛 <strong>Board Memberships</strong> — at 36–40, your credentials + Caziél track record qualify you for board director seats at international luxury or sustainability firms. Target: 1–2 board seats via Harvard + RJC + GIA alumni networks.</div>
+      <div>💝 <strong>Philanthropy — Scholarship for Filipinos</strong> — establish a scholarship fund for aspiring jewelry designers or working moms in the Philippines. Partner with Ayala, Metrobank Foundation, or CHED. Caziél as a force for opportunity, not just luxury.</div>
+    </div>
+    <div style="margin-top:10px;padding:8px 12px;background:var(--blush);border-radius:var(--r-md);font-size:11px;color:var(--rose-deep);font-weight:500">🎯 End Goal: Dr. Norlainie Salim Jamal — Global Luxury Brand Founder, Industry Scientist, Thought Leader, and Philanthropist.</div>
+  </div>
+
+  <!-- GMAT Plan -->
+  <div class="card">
+    <div class="card-title">GMAT 12-Month Rolling Plan · Target 700–730+</div>
+    <div style="font-size:11px;color:var(--text-2);margin-bottom:12px">Your analytics background is a major advantage in Quant. Start this even in Phase 1.</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="padding:10px 12px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:11px;font-weight:600;color:var(--lav-deep);text-transform:uppercase;letter-spacing:0.05em">Months 1–3</div>
+        <div style="font-size:12px;color:var(--text-1);margin-top:3px">Diagnostic + Quantitative Foundation — Data Sufficiency, Problem Solving. 30–45 min/day, 5 days/week.</div>
+      </div>
+      <div style="padding:10px 12px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:11px;font-weight:600;color:var(--lav-deep);text-transform:uppercase;letter-spacing:0.05em">Months 4–6</div>
+        <div style="font-size:12px;color:var(--text-1);margin-top:3px">Verbal Intensive — Critical Reasoning, Sentence Correction, Reading Comprehension. Use Manhattan Prep Verbal Guide.</div>
+      </div>
+      <div style="padding:10px 12px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:11px;font-weight:600;color:var(--lav-deep);text-transform:uppercase;letter-spacing:0.05em">Months 7–9</div>
+        <div style="font-size:12px;color:var(--text-1);margin-top:3px">Integrated Reasoning + Full Practice Exams every 2 weeks. Review every mistake — not just the right answers. Target: mock score 680+.</div>
+      </div>
+      <div style="padding:10px 12px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:11px;font-weight:600;color:var(--lav-deep);text-transform:uppercase;letter-spacing:0.05em">Months 10–12</div>
+        <div style="font-size:12px;color:var(--text-1);margin-top:3px">Target weak spots. 3 full mocks in final 3 weeks. Rest 2 days before exam — no cramming. Target: 700–730+ on actual exam.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Harvard Essay -->
+  <div class="card">
+    <div class="card-title">Harvard MBA Essay Strategy · The 900-Word Canvas</div>
+    <div style="font-size:11px;color:var(--text-2);margin-bottom:12px">HBS asks one essay: <em>"As we review your application, what more would you like us to know as we consider your candidacy?"</em> — 900 words. This is the most important 900 words you will ever write.</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border-soft)"><div style="min-width:80px;font-size:11px;font-weight:600;color:var(--rose-deep)">~150 words</div><div style="font-size:12px;color:var(--text-1)"><strong>The Hook</strong> — A specific vivid moment that shows who you are as a leader. Don't start with "I was born." Start with a scene, a decision, a turning point.</div></div>
+      <div style="display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border-soft)"><div style="min-width:80px;font-size:11px;font-weight:600;color:var(--rose-deep)">~250 words</div><div style="font-size:12px;color:var(--text-1)"><strong>Leadership Evidence</strong> — Caziél, BPO management, business decisions. Use specific numbers. Not "I led a team" but "I led a team that achieved Y result."</div></div>
+      <div style="display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border-soft)"><div style="min-width:80px;font-size:11px;font-weight:600;color:var(--rose-deep)">~200 words</div><div style="font-size:12px;color:var(--text-1)"><strong>Why Harvard</strong> — Name specific professors, the i-Lab, FIELD course, student orgs. Show you've done the research. Be specific — not generic.</div></div>
+      <div style="display:flex;gap:10px;padding:8px 0"><div style="min-width:80px;font-size:11px;font-weight:600;color:var(--rose-deep)">~300 words</div><div style="font-size:12px;color:var(--text-1)"><strong>The Vision</strong> — Global Caziél as ethical Filipino luxury brand. Employment creation in the Philippines. Showing the world that luxury is not exclusive to Western brands. Social impact + personal ambition.</div></div>
+    </div>
+    <div style="margin-top:12px;padding:10px 12px;background:var(--blush);border-radius:var(--r-md);font-size:11px;color:var(--rose-deep)">
+      <strong>Your Differentiators:</strong> Muslim Filipina · Working mom who built two businesses alone · BPO-to-luxury-founder · GIA credentials + jewelry business · Baliwag, Bulacan to Harvard · Post-colonial Southeast Asian luxury narrative.
+    </div>
+  </div>
+</div>
+
+<!-- EUMI -->
+<div class="panel" id="panel-eumi">
+  <div class="stitle">Eumi</div>
+  <div class="ssub">Demi fine jewelry · Curated with intention · Worn without rules</div>
+
+  <!-- Brand Essence -->
+  <div class="card" style="background:linear-gradient(135deg,#EDD8ED 0%,#F5EFE6 100%);border-color:#B48DB5">
+    <div class="card-title" style="color:#7A4A8A">Brand Essence</div>
+    <div style="font-size:13px;font-weight:600;color:#2C2C2C;margin-bottom:8px">925 Sterling Silver · Vermeil · Demi Fine</div>
+    <div style="font-size:12px;color:#4A3A50;line-height:1.8;margin-bottom:10px">
+      <strong>Mission:</strong> To make demi fine jewelry that women actually wear — 925 Sterling Silver and vermeil pieces that are beautiful enough to want and accessible enough to say yes to.<br>
+      <strong>Vision:</strong> To be the go-to destination for demi fine jewelry in the Philippines — a brand that grows with every version of who you are becoming, one piece at a time.
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span style="background:#B48DB522;color:#7A4A8A;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">Curated</span>
+      <span style="background:#B48DB522;color:#7A4A8A;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">Demi Fine</span>
+      <span style="background:#B48DB522;color:#7A4A8A;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">Intentional</span>
+      <span style="background:#B48DB522;color:#7A4A8A;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">Charm-forward</span>
+      <span style="background:#B48DB522;color:#7A4A8A;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">Lustrous</span>
+      <span style="background:#B48DB522;color:#7A4A8A;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600">Accessible</span>
+    </div>
+  </div>
+
+  <!-- Brand Voice -->
+  <div class="card">
+    <div class="card-title">Brand Voice</div>
+    <div style="font-size:13px;color:var(--text-1);line-height:1.8;font-style:italic;margin-bottom:8px">"Warm, calm, and quietly confident. Eumi speaks like a trusted friend who happens to know exactly what looks good on you — clear, encouraging, and never trying too hard."</div>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--text-2)">
+      <div>✅ <strong>Be human</strong> — Write like you're talking to a friend who trusts your taste.</div>
+      <div>✅ <strong>Be confident</strong> — Never apologize for pricing, never over-explain materials.</div>
+      <div>✅ <strong>Be warm</strong> — Eumi is approachable. The tone should never feel cold or distant.</div>
+    </div>
+  </div>
+
+  <!-- Collections -->
+  <div class="card">
+    <div class="card-title">The Collections</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:3px">925 Sterling Silver</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Real metal. Real hallmark. Worn without rules. Hallmarked — tarnish-resistant with care. Built to be worn, not stored. <strong>Finishes:</strong> Rhodium · Natural Silver.</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:3px">Vermeil</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Gold on the outside. Silver at the core. 925 Sterling Silver base with thick gold plating (min. 2.5 microns). Not brass. Never called "gold-plated" without context. <strong>Finishes:</strong> 14K Yellow Gold · 18K Yellow Gold · Rose Gold (Limited Edition).</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:3px">Charms &amp; Modular Pieces</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Start with one. Build your collection. Every charm is designed to connect — to each other, to base bracelets, to the version of you that's slowly building something beautiful. Eumi's most loyal product.</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#FAEEDA,#FBEAF0);border:1px solid #D4849A44">
+        <div style="font-size:12px;font-weight:600;color:var(--rose-deep);margin-bottom:3px">Rose Gold — Limited Edition ✨</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Rose Gold is Eumi's most coveted finish — and its scarcity is intentional. It drops, it sells, it's gone. Never use "Out of Stock" — use <em>"This drop has ended."</em> The gap is the point. Always vermeil. Always limited.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Materials Philosophy -->
+  <div class="card">
+    <div class="card-title">Materials Philosophy</div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.8">
+      Eumi works in two precious materials — both grounded in real silver, both designed to be worn, not saved.<br><br>
+      <strong style="color:var(--text-1)">925 Sterling Silver</strong> — Hallmarked precious metal. The backbone of Eumi — honest, beautiful, and built to last. Every piece is stamped.<br><br>
+      <strong style="color:var(--text-1)">Vermeil</strong> — 925 Sterling Silver base with gold plating (minimum 2.5 microns). This is Eumi's gold — not brass, not plated base metal. Real silver underneath, always.<br><br>
+      <div style="padding:8px 12px;background:var(--blush);border-radius:var(--r-md);font-size:11px;color:var(--rose-deep);font-weight:500">We do not work with base metals. Every Eumi piece starts with silver — because that's the only foundation worth building on.</div>
+    </div>
+  </div>
+
+  <!-- Visual Identity -->
+  <div class="card">
+    <div class="card-title">Visual Identity</div>
+    <div style="font-size:11px;color:var(--text-2);margin-bottom:12px">Eumi's visual world is built around Dusk Lilac — soft, elegant, and quietly refined. Paired with warm gold accents and intentional negative space.</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border-soft)">
+        <div style="width:32px;height:32px;border-radius:8px;background:#B48DB5;flex-shrink:0"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Dusk Lilac #B48DB5</div><div style="font-size:10px;color:var(--text-3)">Primary brand colour</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border-soft)">
+        <div style="width:32px;height:32px;border-radius:8px;background:#EDD8ED;flex-shrink:0;border:1px solid #ddd"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Petal Blush #EDD8ED</div><div style="font-size:10px;color:var(--text-3)">Backgrounds &amp; packaging</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border-soft)">
+        <div style="width:32px;height:32px;border-radius:8px;background:#F5EFE6;flex-shrink:0;border:1px solid #ddd"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Warm Ivory #F5EFE6</div><div style="font-size:10px;color:var(--text-3)">Canvas / base / product shots</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border-soft)">
+        <div style="width:32px;height:32px;border-radius:8px;background:#B6860E;flex-shrink:0"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Warm Gold #B6860E</div><div style="font-size:10px;color:var(--text-3)">Accents &amp; logo</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0">
+        <div style="width:32px;height:32px;border-radius:8px;background:#2C2C2C;flex-shrink:0"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Ink #2C2C2C</div><div style="font-size:10px;color:var(--text-3)">All text</div></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div style="font-size:11px;color:var(--text-2);line-height:1.8">
+      <strong style="color:var(--text-1)">Typography:</strong> Arial Bold · uppercase · wide letter-spacing (headlines) · Arial Regular sentence case (body) · Never decorative fonts.<br>
+      <strong style="color:var(--text-1)">Photography:</strong> Soft white or Petal Blush backgrounds · Soft natural light, never harsh flash · Dried florals, ceramic, raw silk props · Negative space is the most powerful element.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CAZIÉL FINE JEWELRY -->
+<div class="panel" id="panel-caziel">
+  <div class="stitle">Caziél Fine Jewelry</div>
+  <div class="ssub">Built for the Timeless · Designed for the Muse · In the Obsidian, Brilliance Is Born</div>
+
+  <!-- Brand Essence -->
+  <div class="card" style="background:linear-gradient(135deg,#1A1A1B 0%,#2C2C2C 100%);border-color:#D4AF37">
+    <div class="card-title" style="color:#D4AF37;letter-spacing:0.12em">BRAND ESSENCE</div>
+    <div style="font-size:13px;font-weight:600;color:#F5F5F0;margin-bottom:10px;font-family:var(--font-head);letter-spacing:0.04em">Gold Vermeil · Solid Gold · Platinum</div>
+    <div style="font-size:12px;color:#C8C8B8;line-height:1.9;margin-bottom:12px">
+      <strong style="color:#D4AF37">Mission:</strong> To unite structural strength with feminine grace through meticulously crafted, intentionally curated fine jewelry — wrought in gold, vermeil, and platinum.<br><br>
+      <strong style="color:#D4AF37">Vision:</strong> To be the foremost destination for discerning individuals who regard jewelry not merely as adornment, but as wearable architecture — art forged in precious metal, built to be worn and to endure.
+    </div>
+    <div style="font-size:11px;color:#A09080;font-style:italic;border-top:1px solid #333;padding-top:10px">"Sophisticated, timeless, and assured. We speak as a high-end atelier — refined and authoritative, yet deeply inviting."</div>
+  </div>
+
+  <!-- The Founder's Story -->
+  <div class="card" style="border-left:4px solid #D4AF37">
+    <div class="card-title" style="color:#B6860E">The Founder's Story</div>
+    <div style="font-size:12px;color:var(--text-2);line-height:1.9">
+      Norlainie Jamal grew up watching her mother's hands — assembling costume jewelry, turning raw materials into something people would want to wear. Her stepfather taught her the other side: authentic fine jewelry, where metal has a story and every hallmark means something.<br><br>
+      Before Caziél, she built <strong>Eumi</strong> — a self-made daily jewelry venture conceived and operated entirely alone. Through Eumi, she learned what her customers truly needed. Caziél is that next chapter.
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:#FDF9F0;border-radius:var(--r-md);border:1px solid #D4AF3730">
+      <div style="font-size:11px;font-weight:700;color:#B6860E;letter-spacing:0.06em;margin-bottom:4px">FOR CASSIEL</div>
+      <div style="font-size:12px;color:var(--text-2);line-height:1.7">The name Caziél comes from Cassiel — a name that carries the weight of quiet strength, of bearing witness, of light that endures. Cassius, paired with El — built with intention and with love.</div>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:var(--text-1);font-style:italic;text-align:center;font-family:var(--font-head)">"I did not start Caziél to sell jewelry. I started it to build something worthy of the name it carries."<br><span style="font-size:10px;color:var(--text-3);font-style:normal">— Norlainie Jamal, Founder</span></div>
+  </div>
+
+  <!-- The Two Pillars -->
+  <div class="card">
+    <div class="card-title">The Two Pillars — Design DNA</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="padding:14px 16px;border-radius:var(--r-md);background:linear-gradient(135deg,#1A1A1B,#2C2C2C);border:1px solid #D4AF3750">
+        <div style="font-size:12px;font-weight:700;color:#D4AF37;margin-bottom:6px;letter-spacing:0.06em">THE STRUCTURAL LINE</div>
+        <div style="font-size:11px;color:#C8C8B8;line-height:1.7">Rooted in modern architecture and industrial precision. Clean geometry, bold form, unyielding structure. Produced in <strong style="color:#D4AF37">solid gold and platinum</strong> — the materials of permanence.<br><span style="color:#888;margin-top:4px;display:block">Think: Power dressing, statement rings, architectural symmetry.</span></div>
+      </div>
+      <div style="padding:14px 16px;border-radius:var(--r-md);background:linear-gradient(135deg,#FDF9F0,#FAF0E8);border:1px solid #D4AF3750">
+        <div style="font-size:12px;font-weight:700;color:#B6860E;margin-bottom:6px;letter-spacing:0.06em">THE MUSE COLLECTION</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.7">Drawn from the fluidity of the natural female form. Organic curves, light-catching surfaces, details of quiet poetry. Produced in <strong>14K, 18K, and 22K gold vermeil and solid gold</strong> — the materials of warmth and grace.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Materials Philosophy -->
+  <div class="card">
+    <div class="card-title">Materials Philosophy</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#FDF9F0,#FFF8E8);border:1px solid #D4AF3740">
+        <div style="font-size:11px;font-weight:700;color:#B6860E;letter-spacing:0.06em;margin-bottom:4px">14K / 18K / 22K GOLD VERMEIL</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">The entry point into the Caziél world. A thick layer of gold bonded to a fine metal base — carrying the warmth and colour of solid gold at a considered price point. Min. 2.5 micron gold layer.</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#FEFAE8,#FDF6DC);border:1px solid #D4AF3760">
+        <div style="font-size:11px;font-weight:700;color:#9A6A00;letter-spacing:0.06em;margin-bottom:4px">SOLID 14K / 18K / 21K / 22K GOLD</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">The material of heirlooms. Hallmarked, weighty, built to appreciate in value alongside the life of the wearer. 21K offered for Middle East and South Asian markets where high-purity gold is the cultural standard.</div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#F0F0F2,#E8E8F0);border:1px solid #88888840">
+        <div style="font-size:11px;font-weight:700;color:#444;letter-spacing:0.06em;margin-bottom:4px">PLATINUM (Pt950) — FLAGSHIP ONLY</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Reserved for the Caziél Flagship tier. Cool, rare, and indestructible — platinum carries a weight and permanence that no other metal can match. The metal of legacy.</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:10px 12px;background:#1A1A1B;border-radius:var(--r-md);font-size:11px;color:#D4AF37;font-weight:500;text-align:center;letter-spacing:0.04em">We do not use silver or gold-plated base metal. Every Caziél creation is hallmarked and traceable.</div>
+  </div>
+
+  <!-- Visual Identity -->
+  <div class="card">
+    <div class="card-title">Visual Identity — Midnight Luxe</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border-soft)">
+        <div style="width:32px;height:32px;border-radius:8px;background:#1A1A1B;flex-shrink:0;border:1px solid #555"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Obsidian Matte #1A1A1B</div><div style="font-size:10px;color:var(--text-3)">Primary — backgrounds, packaging, grid</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border-soft)">
+        <div style="width:32px;height:32px;border-radius:8px;background:#D4AF37;flex-shrink:0"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">24K Champagne Gold #D4AF37</div><div style="font-size:10px;color:var(--text-3)">Secondary — wordmark, branding accents</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 0">
+        <div style="width:32px;height:32px;border-radius:8px;background:#333333;flex-shrink:0;border:1px solid #555"></div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--text-1)">Soft Graphite #333333</div><div style="font-size:10px;color:var(--text-3)">Accent — depth, shadow, secondary type</div></div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-2);line-height:1.8">
+      <strong style="color:var(--text-1)">Headlines:</strong> High-contrast Serif (Didot or Baskerville) — the language of heritage and editorial authority.<br>
+      <strong style="color:var(--text-1)">Body:</strong> Minimalist Sans-Serif (Montserrat or Lato) — precise and modern.
+    </div>
+  </div>
+
+  <!-- Price Architecture -->
+  <div class="card">
+    <div class="card-title">Price Architecture</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#FDF9F0,#FFF8E8);border:1px solid #D4AF3740">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#B6860E;letter-spacing:0.05em">VERMEIL — THE ENTRY</div>
+          <div style="font-size:10px;color:var(--text-3);margin-top:2px">14K / 18K / 22K Gold Vermeil</div>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:var(--text-1);font-family:var(--font-head)">$600–$2,500</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#FEFAE8,#FDF0C0);border:1px solid #D4AF3780">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#9A6A00;letter-spacing:0.05em">GOLD — THE SIGNATURE</div>
+          <div style="font-size:10px;color:var(--text-3);margin-top:2px">Solid 14K / 18K / 21K / 22K Gold</div>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:var(--text-1);font-family:var(--font-head)">$2,500–$12,000</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:var(--r-md);background:linear-gradient(135deg,#1A1A1B,#2C2C2C);border:1px solid #D4AF37">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#D4AF37;letter-spacing:0.05em">PLATINUM — THE FLAGSHIP</div>
+          <div style="font-size:10px;color:#888;margin-top:2px">Platinum (Pt950) · Limited Edition</div>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:#D4AF37;font-family:var(--font-head)">$8,000–$25,000+</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text-3);text-align:center;font-style:italic">Caziél does not discount. The price is always honest.</div>
+  </div>
+
+  <!-- Target Personas -->
+  <div class="card">
+    <div class="card-title">Customer Personas</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:12px;font-weight:700;color:var(--text-1);margin-bottom:2px">Persona 01 — The Architect</div>
+        <div style="font-size:10px;font-weight:600;color:#B6860E;margin-bottom:6px;letter-spacing:0.04em">SIMONE, 34 · SINGAPORE / DUBAI / MANILA</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Fewer pieces. Higher value. Wears the same ring for a decade. Buys solid gold or platinum. Expects a Certificate of Authenticity. Wears The Structural Line.<br><span style="color:var(--text-3);font-style:italic">"Wear your precision."</span></div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:12px;font-weight:700;color:var(--text-1);margin-bottom:2px">Persona 02 — The Muse</div>
+        <div style="font-size:10px;font-weight:600;color:#B6860E;margin-bottom:6px;letter-spacing:0.04em">REINA, 27 · LA / LONDON / METRO MANILA</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Jewelry is identity. Layers 22K vermeil daily, saves for solid gold milestones. Enters through The Muse Collection. Buys one solid gold piece a year as a gift to herself.<br><span style="color:var(--text-3);font-style:italic">"Forged for the feeling."</span></div>
+      </div>
+      <div style="padding:12px 14px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border-soft)">
+        <div style="font-size:12px;font-weight:700;color:var(--text-1);margin-bottom:2px">Persona 03 — The Collector</div>
+        <div style="font-size:10px;font-weight:600;color:#B6860E;margin-bottom:6px;letter-spacing:0.04em">MARCUS, 42 · TOKYO / NEW YORK / LONDON</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.6">Platinum and solid gold only. Asks about the hallmark before the price. The Flagship customer. Treats fine jewelry as both art and appreciating asset.<br><span style="color:var(--text-3);font-style:italic">"Built to outlast the moment."</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand Lexicon -->
+  <div class="card">
+    <div class="card-title">Brand Lexicon</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Forged</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Hallmarked</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Wrought</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Heirloom</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Timeless</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Precision</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Permanent</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Structural</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Craftsmanship</span>
+      <span style="background:#1A1A1B;color:#D4AF37;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:0.06em">Rare</span>
+    </div>
+    <div style="font-size:11px;color:var(--text-3);font-style:italic">Refrain from slang, excessive emoji, or aggressive hard-sell language. Caziél commands attention through prestige — never through volume.</div>
+  </div>
+
+  <!-- The Manifesto -->
+  <div class="card" style="background:linear-gradient(160deg,#1A1A1B 0%,#2C2C2C 100%);border-color:#D4AF37">
+    <div class="card-title" style="color:#D4AF37;letter-spacing:0.12em">THE MANIFESTO</div>
+    <div style="font-size:12px;color:#C8C8B8;line-height:2;font-style:italic;text-align:center;padding:4px 0">
+      "From the silence of the obsidian, brilliance is born. Caziél is the intersection where the cold precision of architecture meets the warm fluidity of the soul. We do not merely curate jewelry — we forge the structures of self-expression. For the modern visionary who discovers strength in shadow, and finds light in the details."
+    </div>
+    <div style="text-align:center;margin-top:14px;font-size:11px;color:#D4AF37;letter-spacing:0.1em;font-family:var(--font-head)">CAZIÉL FINE JEWELRY<br><span style="font-size:10px;color:#888;font-family:var(--font-body);letter-spacing:0.04em">Built for the Timeless. Designed for the Muse.</span></div>
+  </div>
+</div>
+
+<script>
+// Firebase init
+const firebaseConfig = {
+  apiKey: "AIzaSyC_urGfP5XEcPgS9pWD90PD03IUBR9pIXo",
+  authDomain: "financial-hub-f890f.firebaseapp.com",
+  databaseURL: "https://financial-hub-f890f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "financial-hub-f890f",
+  storageBucket: "financial-hub-f890f.firebasestorage.app",
+  messagingSenderId: "1071662391490",
+  appId: "1:1071662391490:web:abd88a8db7f129c5fe1b5b"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const FB_KEY = 'norlainie_hub_v6';
+
+var SK='norlainie_hub_v6';
+function gid(){return Math.random().toString(36).slice(2,8)}
+var colorMap={purple:'#7F77DD',teal:'#1D9E75',blue:'#378ADD',amber:'#EF9F27',coral:'#D85A30',pink:'#D4537E'};
+var catColors={Food:'#E6F1FB',Transport:'#FAEEDA',Education:'#EEEDFE',Child:'#FBEAF0',Business:'#EAF3DE',
+  'Trade Fair':'#FAECE7','Travel':'#E1F5EE',Health:'#FCEBEB',Utilities:'#F1EFE8',Personal:'#FBEAF0',Other:'#F1EFE8'};
+var catText={Food:'#0C447C',Transport:'#633806',Education:'#3C3489',Child:'#72243E',Business:'#27500A',
+  'Trade Fair':'#712B13','Travel':'#085041',Health:'#A32D2D',Utilities:'#444441',Personal:'#72243E',Other:'#444441'};
+
+var activeSavTab='personal';
+var activeBankTab='personal';
+var D={
+  savings:[
+    {id:gid(),name:'Emergency Fund',target:300000,saved:0,color:'teal',category:'personal'},
+    {id:gid(),name:'GMAT & GIA fees',target:110000,saved:0,color:'purple',category:'personal'},
+    {id:gid(),name:'Harvard application fund',target:500000,saved:0,color:'blue',category:'personal'},
+    {id:gid(),name:"Child's education fund",target:200000,saved:0,color:'pink',category:'personal'},
+    {id:gid(),name:'September trade fair',target:50000,saved:0,color:'amber',category:'business'},
+    {id:gid(),name:'Business travel fund',target:80000,saved:0,color:'coral',category:'business'},
+    {id:gid(),name:'Boston living fund',target:400000,saved:0,color:'blue',category:'personal'}
+  ],
+  banks:[],
+  txns:[],
+  expenses:[],
+  biz:{caziel:[],eumi:[],informal:[]},
+  insurance:[],
+  ecom:[],
+  income:80000,
+  activeBiz:'caziel',
+  floorSalary:15000,
+  autoLedger:{personal:[],caziel:[],eumi:[],informal:[]}
+};
+
+var SK='norlainie_hub_v6';
+var SK_OLD=['norlainie_hub_v4','norlainie_hub_v5'];
+
+function showSyncToast(){
+  var t=document.getElementById('sync-toast');
+  if(!t)return;
+  t.style.opacity='1';
+  t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(t._to);
+  t._to=setTimeout(function(){
+    t.style.opacity='0';
+    t.style.transform='translateX(-50%) translateY(10px)';
+  },2500);
+}
+
+async function load(){
+  try{
+    var snap=await db.ref(FB_KEY).once('value');
+    var val=snap.val();
+    if(val){
+      var p=JSON.parse(val);
+      if(p.savings&&p.savings.length)D.savings=p.savings;
+      if(p.banks)D.banks=p.banks;
+      if(p.txns)D.txns=p.txns;
+      if(p.expenses)D.expenses=p.expenses;
+      if(p.biz){D.biz=p.biz;if(!D.biz.eumi)D.biz.eumi=[];}
+      if(p.insurance)D.insurance=p.insurance;
+      if(p.ecom)D.ecom=p.ecom;
+      if(p.income)D.income=p.income;
+      if(p.floorSalary)D.floorSalary=p.floorSalary;
+      if(p.autoLedger)D.autoLedger=p.autoLedger;
+      if(p.ledger&&!p.autoLedger){
+        if(p.ledger.personal)D.autoLedger.personal=p.ledger.personal.map(e=>({...e,bankName:'Manual'}));
+      }
+    }
+  }catch(e){console.error('Firebase load error',e);}
+  document.getElementById('income-in').value=D.income;
+  var td=document.getElementById('exp-date');
+  if(td)td.valueAsDate=new Date();
+  var ed=document.getElementById('ecom-date');
+  if(ed)ed.valueAsDate=new Date();
+  var td2=document.getElementById('txn-date');
+  if(td2)td2.valueAsDate=new Date();
+  renderAll();
+  undoHistory=[JSON.stringify(D)];
+  updateUndoBtn();
+  // Realtime listener
+  db.ref(FB_KEY).on('value',function(snapshot){
+    var val=snapshot.val();
+    if(!val)return;
+    try{
+      var p=JSON.parse(val);
+      if(JSON.stringify(p)===JSON.stringify(D))return;
+      if(p.savings&&p.savings.length)D.savings=p.savings;
+      if(p.banks)D.banks=p.banks;
+      if(p.txns)D.txns=p.txns;
+      if(p.expenses)D.expenses=p.expenses;
+      if(p.biz){D.biz=p.biz;if(!D.biz.eumi)D.biz.eumi=[];}
+      if(p.insurance)D.insurance=p.insurance;
+      if(p.ecom)D.ecom=p.ecom;
+      if(p.income)D.income=p.income;
+      if(p.floorSalary)D.floorSalary=p.floorSalary;
+      if(p.autoLedger)D.autoLedger=p.autoLedger;
+      renderAll();
+      showSyncToast();
+    }catch(e){}
+  });
+}
+
+async function save(){
+  var snap=JSON.stringify(D);
+  undoHistory.push(snap);
+  if(undoHistory.length>20)undoHistory.shift();
+  updateUndoBtn();
+  try{await db.ref(FB_KEY).set(snap);}catch(e){console.error('Firebase save error',e);}
+}
+
+var undoHistory=[];
+
+function updateUndoBtn(){
+  var btn=document.getElementById('undo-btn');
+  if(!btn)return;
+  if(undoHistory.length>1){
+    btn.disabled=false;
+    btn.style.color='var(--rose-deep)';
+    btn.style.borderColor='var(--rose)';
+    btn.style.background='var(--blush)';
+  } else {
+    btn.disabled=true;
+    btn.style.color='var(--text-3)';
+    btn.style.borderColor='var(--border)';
+    btn.style.background='var(--white)';
+  }
+}
+
+async function undo(){
+  if(undoHistory.length<=1)return;
+  undoHistory.pop(); // remove current state
+  var prev=undoHistory[undoHistory.length-1];
+  var p=JSON.parse(prev);
+  if(p.savings&&p.savings.length)D.savings=p.savings;
+  if(p.banks)D.banks=p.banks;
+  if(p.txns)D.txns=p.txns;
+  if(p.expenses)D.expenses=p.expenses;
+  if(p.biz){D.biz=p.biz;if(!D.biz.eumi)D.biz.eumi=[];}
+  if(p.insurance)D.insurance=p.insurance;
+  if(p.ecom)D.ecom=p.ecom;
+  if(p.income)D.income=p.income;
+  if(p.floorSalary)D.floorSalary=p.floorSalary;
+  if(p.autoLedger)D.autoLedger=p.autoLedger;
+  try{await db.ref(FB_KEY).set(prev);}catch(e){}
+  updateUndoBtn();
+  renderAll();
+  // Flash undo button as feedback
+  var btn=document.getElementById('undo-btn');
+  if(btn){btn.textContent='✓ Undone';setTimeout(()=>{btn.innerHTML='<i class="ti ti-arrow-back-up"></i> Undo';updateUndoBtn();},1000);}
+}
+
+function show(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('nb-'+id).classList.add('active');
+  if(id==='dash')renderDash();
+  if(id==='savings')renderSavings();
+  if(id==='bank')renderBank();
+  if(id==='expenses')renderExpenses();
+  if(id==='budget')renderBudget();
+  if(id==='biz')renderBiz();
+  if(id==='ecom')renderEcom();
+  if(id==='ins')renderIns();
+  if(id==='ledger')renderLedger();
+  if(id==='roadmap'){/* static */}
+  if(id==='eumi'){/* static */}
+  if(id==='caziel'){/* static */}
+}
+
+function renderAll(){renderDash();renderSavings();renderBank();renderExpenses();renderBudget();renderBiz();renderEcom();renderIns();renderLedger();}
+
+function php(n){return '₱'+Math.round(n).toLocaleString();}
+
+// DASHBOARD
+function renderDash(){
+  var totalSaved=D.savings.reduce((s,g)=>s+g.saved,0);
+  var totalBank=D.banks.reduce((s,b)=>s+b.balance,0);
+  var totalExp=D.expenses.reduce((s,e)=>s+e.amt,0);
+  var bizIncome=D.biz.caziel.filter(x=>x.type==='income').reduce((s,x)=>s+x.amt,0)+
+    (D.biz.eumi||[]).filter(x=>x.type==='income').reduce((s,x)=>s+x.amt,0)+
+    D.biz.informal.filter(x=>x.type==='income').reduce((s,x)=>s+x.amt,0);
+  var now=new Date();var curMo=now.getMonth();var curYr=now.getFullYear();
+  var ecomMonth=D.ecom.filter(x=>{var d=new Date(x.date);return d.getMonth()===curMo&&d.getFullYear()===curYr;}).reduce((s,x)=>s+x.net,0);
+  var bizExpMonth=D.biz.caziel.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amt,0)+(D.biz.eumi||[]).filter(x=>x.type==='expense').reduce((s,x)=>s+x.amt,0)+D.biz.informal.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amt,0);
+  var totalBizIncome=bizIncome+ecomMonth;
+  var netProfit=totalBizIncome-bizExpMonth;
+  var floor=D.floorSalary||15000;
+  var extra=Math.max(0,netProfit-floor);
+  var bonusDraw=Math.round(extra*0.5);
+  var totalDraw=floor+bonusDraw;
+  var bizBuffer=Math.round(extra*0.5);
+  document.getElementById('dash-metrics').innerHTML=`
+    <div class="metric"><div class="mlabel">Total savings</div><div class="mval">${php(totalSaved)}</div><div class="msub">across ${D.savings.length} buckets</div></div>
+    <div class="metric"><div class="mlabel">Total in bank</div><div class="mval">${php(totalBank)}</div><div class="msub">${D.banks.length} account${D.banks.length!==1?'s':''}</div></div>
+    <div class="metric"><div class="mlabel">Total expenses</div><div class="mval">${php(totalExp)}</div><div class="msub">all time</div></div>
+    <div class="metric"><div class="mlabel">Business income</div><div class="mval">${php(bizIncome)}</div><div class="msub">Caziél + informal</div></div>
+    <div class="metric"><div class="mlabel">Ecom payouts (month)</div><div class="mval" style="color:#27500A">${php(ecomMonth)}</div><div class="msub">net withdrawals</div></div>`;
+  var gs=D.savings.slice(0,4).map(g=>{
+    var pct=g.target?Math.min(100,Math.round(g.saved/g.target*100)):0;
+    var c=colorMap[g.color]||'#7F77DD';
+    return`<div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-2)"><span>${g.name}</span><span>${php(g.saved)}${g.target?' / '+php(g.target):''}</span></div>
+      <div class="pbar-bg"><div class="pbar" style="width:${g.target?pct:0}%;background:${c}"></div></div>
+      ${g.target?`<div style="font-size:10px;color:var(--text-3)">${pct}% reached</div>`:''}
+    </div>`;}).join('');
+  document.getElementById('dash-savings').innerHTML=gs||'<div class="empty">No savings yet</div>';
+  // Owner's Draw
+  var drawEl=document.getElementById('dash-draw');
+  if(drawEl){
+    var floorInput=D.floorSalary||15000;
+    var drawStatus=netProfit<=0?'danger':netProfit<floor?'warning':'ok';
+    var statusColor=drawStatus==='ok'?'#1D9E75':drawStatus==='warning'?'#EF9F27':'#A32D2D';
+    var statusLabel=drawStatus==='ok'?'✅ On track':'⚠️ Lean month';
+    drawEl.innerHTML=`
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        <div class="draw-main">
+          <div class="draw-label">Your draw this month</div>
+          <div class="draw-amount">${php(totalDraw)}</div>
+          <div class="draw-breakdown">Floor ${php(floor)} + Bonus ${php(bonusDraw)}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div style="background:var(--sage);border-radius:14px;padding:12px">
+            <div style="font-size:10px;font-weight:600;color:var(--sage-deep);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">Income (month)</div>
+            <div style="font-size:16px;font-weight:700;font-family:'Cinzel',serif;color:var(--inc-txt)">${php(totalBizIncome)}</div>
+            <div style="font-size:10px;color:var(--sage-deep)">biz + ecom</div>
+          </div>
+          <div style="background:${netProfit>=0?'var(--sky)':'var(--exp-bg)'};border-radius:14px;padding:12px">
+            <div style="font-size:10px;font-weight:600;color:${netProfit>=0?'var(--sky-deep)':'var(--exp-txt)'};letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">Net Profit</div>
+            <div style="font-size:16px;font-weight:700;font-family:'Cinzel',serif;color:${netProfit>=0?'var(--inc-txt)':'var(--exp-txt)'}">${php(netProfit)}</div>
+            <div style="font-size:10px;color:${netProfit>=0?'var(--sky-deep)':'var(--exp-txt)'}">after expenses</div>
+          </div>
+          <div style="background:var(--peach);border-radius:14px;padding:12px">
+            <div style="font-size:10px;font-weight:600;color:var(--peach-deep);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">Biz Buffer</div>
+            <div style="font-size:16px;font-weight:700;font-family:'Cinzel',serif;color:var(--peach-deep)">${php(bizBuffer)}</div>
+            <div style="font-size:10px;color:var(--peach-deep)">stays in business</div>
+          </div>
+          <div style="background:${statusColor}22;border-radius:14px;padding:12px;border:1.5px solid ${statusColor}44">
+            <div style="font-size:10px;font-weight:600;color:${statusColor};letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">Status</div>
+            <div style="font-size:13px;font-weight:700;color:${statusColor}">${statusLabel}</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--cream);border-radius:14px;padding:12px 14px;border:1px solid var(--border-soft)">
+        <div style="font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Floor Salary</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="number" id="floor-input" value="${floor}" placeholder="Floor salary" style="font-size:13px;font-family:'Montserrat',sans-serif;padding:8px 12px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);color:var(--text-1);width:150px;outline:none">
+          <button class="pbtn" style="font-size:11px;padding:8px 14px" onclick="setFloor()">Update</button>
+        </div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:8px;line-height:1.6">
+          💡 Withdraw on the 1st of next month. Floor = guaranteed. Bonus = 50% of profit above floor.
+        </div>
+      </div>
+`;
+  }
+  var recent=D.expenses.slice(-5).reverse();
+  document.getElementById('dash-expenses').innerHTML=recent.length?recent.map(e=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--border-soft)">
+      <span style="font-size:13px;color:var(--text-1)">${esc(e.desc)}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="tag" style="background:${catColors[e.cat]||'#F1EFE8'};color:${catText[e.cat]||'#444441'}">${e.cat}</span>
+        <span style="font-size:13px;font-weight:500;color:#A32D2D">${php(e.amt)}</span>
+      </div>
+    </div>`).join(''):'<div class="empty">No expenses logged yet</div>';
+}
+
+// SAVINGS
+function setSavTab(tab){
+  activeSavTab=tab;
+  var bp=document.getElementById('savtab-personal');
+  var bb=document.getElementById('savtab-business');
+  if(bp){bp.className='biz-tab'+(tab==='personal'?' active-tab':'');if(tab==='personal'){bp.style.background='var(--blush)';bp.style.borderColor='var(--rose-deep)';bp.style.color='var(--rose-deep)';}else{bp.style.background='';bp.style.borderColor='';bp.style.color='';}}
+  if(bb){bb.className='biz-tab'+(tab==='business'?' active-tab':'');if(tab==='business'){bb.style.background='var(--lavender)';bb.style.borderColor='var(--lav-deep)';bb.style.color='var(--lav-deep)';}else{bb.style.background='';bb.style.borderColor='';bb.style.color='';}}
+  renderSavings();
+}
+
+function renderSavings(){
+  // Ensure every bucket has a category (migration for old data)
+  D.savings.forEach(g=>{if(!g.category)g.category='personal';});
+  var filtered=D.savings.filter(g=>g.category===activeSavTab);
+  var sel=document.getElementById('sav-sel');
+  if(sel)sel.innerHTML=filtered.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
+  var accentMap={purple:'var(--lav-deep)',teal:'var(--sage-deep)',blue:'var(--sky-deep)',amber:'var(--peach-deep)',coral:'var(--peach-deep)',pink:'var(--rose-deep)'};
+  var html=filtered.map(g=>{
+    var pct=g.target?Math.min(100,Math.round(g.saved/g.target*100)):null;
+    var c=colorMap[g.color]||'#7F77DD';
+    var acc=accentMap[g.color]||'var(--rose-deep)';
+    if(g._editing){
+      return`<div class="bucket-card" style="--color-accent:${acc}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <input id="edit-name-${g.id}" value="${esc(g.name)}" placeholder="Bucket name" style="font-size:13px;font-family:var(--font-body);padding:8px 10px;border-radius:var(--r-md);border:1.5px solid var(--rose-deep);background:var(--cream);color:var(--text-1);outline:none;width:100%">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <input type="number" id="edit-target-${g.id}" value="${g.target||''}" placeholder="Target ₱ (optional)" style="font-size:13px;font-family:var(--font-body);padding:8px 10px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--cream);color:var(--text-1);outline:none;flex:1;min-width:120px">
+            <input type="number" id="edit-saved-${g.id}" value="${g.saved||0}" placeholder="Saved ₱" style="font-size:13px;font-family:var(--font-body);padding:8px 10px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--cream);color:var(--text-1);outline:none;flex:1;min-width:120px">
+            <select id="edit-color-${g.id}" style="font-size:12px;font-family:var(--font-body);padding:8px 10px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--cream);color:var(--text-2);outline:none;-webkit-appearance:none;">
+              ${['purple','teal','blue','amber','coral','pink'].map(c=>`<option value="${c}"${g.color===c?' selected':''}>${c.charAt(0).toUpperCase()+c.slice(1)}</option>`).join('')}
+            </select>
+            <select id="edit-cat-${g.id}" style="font-size:12px;font-family:var(--font-body);padding:8px 10px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--cream);color:var(--text-2);outline:none;-webkit-appearance:none;">
+              <option value="personal"${(g.category||'personal')==='personal'?' selected':''}>Personal</option>
+              <option value="business"${g.category==='business'?' selected':''}>Business</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="pbtn" style="flex:1;font-size:12px" onclick="saveBucket('${g.id}')">Save</button>
+            <button class="sbtn" style="flex:1;font-size:12px" onclick="cancelEdit('${g.id}')">Cancel</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    return`<div class="bucket-card" style="--color-accent:${acc}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500;color:var(--text-1)">${esc(g.name)}</div>
+          <div style="font-size:12px;color:var(--text-2);margin-top:2px">Saved: <strong style="color:var(--text-1)">${php(g.saved)}</strong>${g.target?' of '+php(g.target):''}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
+          ${pct!==null?`<span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${c}20;color:${c};font-weight:500">${pct}%</span>`:''}
+          <button class="dbtn" onclick="editBucket('${g.id}')" title="Edit"><i class="ti ti-pencil" aria-hidden="true"></i></button>
+          <button class="dbtn" onclick="delBucket('${g.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      ${g.target?`<div class="pbar-bg"><div class="pbar" style="width:${pct}%;background:${c}"></div></div>`:''}
+    </div>`;
+  }).join('');
+  document.getElementById('savings-list').innerHTML=html||`<div class="empty">No ${activeSavTab} savings buckets yet.</div>`;
+}
+
+function editBucket(id){
+  D.savings.forEach(g=>g._editing=g.id===id);
+  renderSavings();
+}
+
+function cancelEdit(id){
+  var g=D.savings.find(x=>x.id===id);
+  if(g)delete g._editing;
+  renderSavings();
+}
+
+function saveBucket(id){
+  var g=D.savings.find(x=>x.id===id);if(!g)return;
+  var nameEl=document.getElementById('edit-name-'+id);
+  var targetEl=document.getElementById('edit-target-'+id);
+  var savedEl=document.getElementById('edit-saved-'+id);
+  var colorEl=document.getElementById('edit-color-'+id);
+  var catEl=document.getElementById('edit-cat-'+id);
+  if(nameEl&&nameEl.value.trim())g.name=nameEl.value.trim();
+  if(targetEl)g.target=parseFloat(targetEl.value)||0;
+  if(savedEl)g.saved=parseFloat(savedEl.value)||0;
+  if(colorEl)g.color=colorEl.value;
+  if(catEl)g.category=catEl.value;
+  delete g._editing;
+  save();renderSavings();renderDash();
+}
+
+function addSaving(){
+  var id=document.getElementById('sav-sel').value;
+  var amt=parseFloat(document.getElementById('sav-amt').value);
+  if(!id||!amt||amt<=0)return;
+  var g=D.savings.find(x=>x.id===id);if(!g)return;
+  g.saved+=amt;
+  document.getElementById('sav-amt').value='';
+  save();renderSavings();renderDash();
+}
+
+function addBucket(){
+  var name=document.getElementById('sav-name-in').value.trim();
+  var target=parseFloat(document.getElementById('sav-target-in').value)||0;
+  var color=document.getElementById('sav-color-in').value;
+  var category=document.getElementById('sav-cat-in')?document.getElementById('sav-cat-in').value:'personal';
+  if(!name)return;
+  D.savings.push({id:gid(),name,target,saved:0,color,category});
+  document.getElementById('sav-name-in').value='';
+  document.getElementById('sav-target-in').value='';
+  // Switch to matching tab
+  activeSavTab=category;
+  var bp=document.getElementById('savtab-personal');
+  var bb=document.getElementById('savtab-business');
+  if(bp){bp.className='biz-tab'+(category==='personal'?' active-tab':'');if(category==='personal'){bp.style.background='var(--blush)';bp.style.borderColor='var(--rose-deep)';bp.style.color='var(--rose-deep)';}else{bp.style.background='';bp.style.borderColor='';bp.style.color='';}}
+  if(bb){bb.className='biz-tab'+(category==='business'?' active-tab':'');if(category==='business'){bb.style.background='var(--lavender)';bb.style.borderColor='var(--lav-deep)';bb.style.color='var(--lav-deep)';}else{bb.style.background='';bb.style.borderColor='';bb.style.color='';}}
+  save();renderSavings();renderDash();
+}
+
+function delBucket(id){D.savings=D.savings.filter(x=>x.id!==id);save();renderSavings();renderDash();}
+
+// BANK ACCOUNTS
+function setBankTab(tab){
+  activeBankTab=tab;
+  var bp=document.getElementById('banktab-personal');
+  var bb=document.getElementById('banktab-business');
+  if(bp){bp.className='biz-tab'+(tab==='personal'?' active-tab':'');}
+  if(bb){bb.className='biz-tab'+(tab==='business'?' active-tab':'');}
+  renderBank();
+}
+
+function renderBank(){
+  var ledgerLabels={personal:'Personal',caziel:'Caziél',eumi:'Eumi',informal:'Informal Biz'};
+  var bizLedgers=['caziel','eumi','informal'];
+  // Split banks
+  var personalBanks=D.banks.filter(b=>b.ledger==='personal');
+  var bizBanks=D.banks.filter(b=>bizLedgers.includes(b.ledger));
+  var shown=activeBankTab==='personal'?personalBanks:bizBanks;
+
+  // Update tab buttons style
+  var bp=document.getElementById('banktab-personal');
+  var bb=document.getElementById('banktab-business');
+  if(bp){bp.className='biz-tab'+(activeBankTab==='personal'?' active-tab':'');}
+  if(bb){bb.className='biz-tab'+(activeBankTab==='business'?' active-tab':'');}
+
+  // Summary metrics for shown section
+  var sectionTotal=shown.reduce((s,b)=>s+b.balance,0);
+  var allTotal=D.banks.reduce((s,b)=>s+b.balance,0);
+  var summaryEl=document.getElementById('bank-summary');
+  if(summaryEl){
+    summaryEl.innerHTML=shown.length?
+      shown.map(b=>`<div class="metric"><div class="mlabel">${esc(b.name)}</div><div class="mval">${php(b.balance)}</div><div class="msub">${b.type} · ${ledgerLabels[b.ledger]||b.ledger}</div></div>`).join('')+
+      `<div class="metric" style="border:1.5px solid var(--border)"><div class="mlabel">${activeBankTab==='personal'?'Personal':'Business'} Total</div><div class="mval" style="color:var(--sky-deep)">${php(sectionTotal)}</div><div class="msub">all accounts</div></div>`:'';
+  }
+
+  // All accounts dropdown for txn (show all)
+  var sel=document.getElementById('txn-acct');
+  if(sel)sel.innerHTML=D.banks.map(b=>`<option value="${b.id}">${b.name} (${ledgerLabels[b.ledger]||b.ledger})</option>`).join('');
+
+  // Account cards — only show current tab's banks
+  var accs=shown.map(b=>{
+    var btxns=D.txns.filter(t=>t.bankId===b.id).slice(-5).reverse();
+    var sectionColor=b.ledger==='personal'?'var(--rose-deep)':'var(--lav-deep)';
+    var sectionBg=b.ledger==='personal'?'var(--blush)':'var(--lavender)';
+    return`<div class="card" style="border-left:4px solid ${sectionColor}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-1)">${esc(b.name)}</div>
+          <div style="font-size:11px;color:var(--text-2);margin-top:2px">${b.type} · <span style="padding:2px 8px;border-radius:10px;font-weight:600;font-size:10px;background:${sectionBg};color:${sectionColor}">${ledgerLabels[b.ledger]||b.ledger}</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px;font-weight:600;font-family:var(--font-head);color:var(--text-1)">${php(b.balance)}</div>
+          <button class="dbtn" onclick="delBank('${b.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      ${btxns.length?`<table class="tbl"><thead><tr><th style="width:35%">Note</th><th style="width:20%">Type</th><th style="width:25%">Amount</th><th style="width:20%">Date</th></tr></thead><tbody>
+        ${btxns.map(t=>`<tr><td>${esc(t.note||'—')}</td>
+          <td><span class="tag ${t.type==='deposit'?'inc':'exp-neg'}">${t.type}</span></td>
+          <td style="font-weight:500;color:${t.type==='deposit'?'#27500A':'#A32D2D'}">${t.type==='deposit'?'+':'-'}${php(t.amt)}</td>
+          <td style="font-size:11px;color:var(--text-3)">${t.date||'—'}</td></tr>`).join('')}
+      </tbody></table>`:'<div class="empty" style="font-size:11px">No transactions yet</div>'}
+    </div>`;}).join('');
+  document.getElementById('bank-accounts-list').innerHTML=accs||`<div class="empty">No ${activeBankTab} bank accounts yet. Add one below.</div>`;
+}
+
+function addBankAccount(){
+  var name=document.getElementById('bank-name-in').value.trim();
+  var type=document.getElementById('bank-type-in').value;
+  var ledger=document.getElementById('bank-ledger-in').value;
+  var bal=parseFloat(document.getElementById('bank-bal-in').value)||0;
+  if(!name)return;
+  var id=gid();
+  D.banks.push({id,name,type,ledger,balance:bal});
+  // Post opening balance to ledger
+  if(bal>0){
+    if(!D.autoLedger[ledger])D.autoLedger[ledger]=[];
+    D.autoLedger[ledger].push({id:gid(),date:new Date().toLocaleDateString(),bankId:id,bankName:name,desc:'Opening balance — '+name,type:'credit',amt:bal});
+  }
+  document.getElementById('bank-name-in').value='';
+  document.getElementById('bank-bal-in').value='';
+  // Switch to matching tab
+  activeBankTab=ledger==='personal'?'personal':'business';
+  save();renderBank();renderDash();
+}
+
+function delBank(id){
+  D.banks=D.banks.filter(x=>x.id!==id);
+  D.txns=D.txns.filter(x=>x.bankId!==id);
+  // Remove auto-ledger entries for this bank
+  Object.keys(D.autoLedger).forEach(k=>{D.autoLedger[k]=D.autoLedger[k].filter(x=>x.bankId!==id);});
+  save();renderBank();renderDash();renderLedger();
+}
+
+function logTxn(){
+  var bid=document.getElementById('txn-acct').value;
+  var type=document.getElementById('txn-type').value;
+  var amt=parseFloat(document.getElementById('txn-amt').value);
+  var note=document.getElementById('txn-note').value.trim();
+  var dateEl=document.getElementById('txn-date');
+  var date=dateEl&&dateEl.value?new Date(dateEl.value).toLocaleDateString():new Date().toLocaleDateString();
+  if(!bid||!amt||amt<=0)return;
+  var b=D.banks.find(x=>x.id===bid);if(!b)return;
+  b.balance=type==='deposit'?b.balance+amt:b.balance-amt;
+  D.txns.push({id:gid(),bankId:bid,type,amt,note,date});
+  // Auto-post to the correct ledger
+  var ledgerKey=b.ledger||'personal';
+  if(!D.autoLedger[ledgerKey])D.autoLedger[ledgerKey]=[];
+  D.autoLedger[ledgerKey].push({
+    id:gid(),date,bankId:bid,bankName:b.name,
+    desc:note||type.charAt(0).toUpperCase()+type.slice(1)+' — '+b.name,
+    type:type==='deposit'?'credit':'debit',
+    amt
+  });
+  document.getElementById('txn-amt').value='';
+  document.getElementById('txn-note').value='';
+  save();renderBank();renderDash();renderLedger();
+}
+
+// EXPENSES
+function renderExpenses(){
+  var filter=document.getElementById('exp-filter')?document.getElementById('exp-filter').value:'All';
+  var list=filter==='All'?D.expenses:D.expenses.filter(e=>e.cat===filter);
+  var total=list.reduce((s,e)=>s+e.amt,0);
+  var bycat={};
+  D.expenses.forEach(e=>{bycat[e.cat]=(bycat[e.cat]||0)+e.amt;});
+  var topCat=Object.entries(bycat).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('exp-summary').innerHTML=`
+    <div class="metric"><div class="mlabel">Total expenses</div><div class="mval">${php(D.expenses.reduce((s,e)=>s+e.amt,0))}</div><div class="msub">all time</div></div>
+    <div class="metric"><div class="mlabel">Filtered total</div><div class="mval">${php(total)}</div><div class="msub">${filter==='All'?'all categories':filter}</div></div>
+    <div class="metric"><div class="mlabel">Top category</div><div class="mval" style="font-size:14px">${topCat?topCat[0]:'—'}</div><div class="msub">${topCat?php(topCat[1]):''}</div></div>
+    <div class="metric"><div class="mlabel">No. of entries</div><div class="mval">${list.length}</div><div class="msub">transactions</div></div>`;
+  var tbody=document.getElementById('exp-tbody');
+  if(!tbody)return;
+  var rows=list.slice().reverse();
+  tbody.innerHTML=rows.length?rows.map(e=>`<tr>
+    <td style="overflow:hidden;text-overflow:ellipsis">${esc(e.desc)}</td>
+    <td><span class="tag" style="background:${catColors[e.cat]||'#F1EFE8'};color:${catText[e.cat]||'#444441'}">${e.cat}</span></td>
+    <td style="font-weight:500;color:#A32D2D">${php(e.amt)}</td>
+    <td style="font-size:11px;color:var(--text-2)">${e.date||'—'}</td>
+    <td><button class="dbtn" onclick="delExp('${e.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+  </tr>`).join(''):`<tr><td colspan="5"><div class="empty">No expenses logged yet</div></td></tr>`;
+}
+
+function addExpense(){
+  var desc=document.getElementById('exp-desc').value.trim();
+  var amt=parseFloat(document.getElementById('exp-amt').value);
+  var cat=document.getElementById('exp-cat').value;
+  var date=document.getElementById('exp-date').value;
+  if(!desc||!amt||amt<=0)return;
+  D.expenses.push({id:gid(),desc,amt,cat,date});
+  document.getElementById('exp-desc').value='';
+  document.getElementById('exp-amt').value='';
+  save();renderExpenses();renderDash();
+}
+
+function delExp(id){D.expenses=D.expenses.filter(x=>x.id!==id);save();renderExpenses();renderDash();}
+
+// BUDGET
+function renderBudget(){
+  var inc=parseFloat(document.getElementById('income-in').value)||80000;
+  D.income=inc;save();
+  var needs=Math.round(inc*0.50),wants=Math.round(inc*0.20),savingsAmt=Math.round(inc*0.20),empire=Math.round(inc*0.10);
+  var cats=[
+    {label:'Needs (50%) — bills, food, family',amt:needs,color:'var(--sage-deep)',max:inc},
+    {label:'Wants (20%) — lifestyle, personal',amt:wants,color:'var(--sky-deep)',max:inc},
+    {label:'Savings (20%) — all buckets',amt:savingsAmt,color:'var(--lav-deep)',max:inc},
+    {label:'Education / empire (10%)',amt:empire,color:'var(--peach-deep)',max:inc}];
+  document.getElementById('budget-breakdown').innerHTML=cats.map(c=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);margin-bottom:5px"><span>${c.label}</span><span style="font-weight:500;color:var(--text-1)">${php(c.amt)}</span></div>
+      <div class="pbar-bg"><div class="pbar" style="width:${Math.round(c.amt/c.max*100)}%;background:${c.color}"></div></div>
+    </div>`).join('');
+  var reco=[
+    {label:'Emergency fund (monthly add)',amt:Math.round(savingsAmt*0.35),note:'Target: 6 months of expenses'},
+    {label:'Child education plan premium',amt:Math.round(savingsAmt*0.20),note:'Recommended: ₱2,500–₱5,000/mo'},
+    {label:'GMAT / GIA fees (monthly set aside)',amt:Math.round(savingsAmt*0.20),note:'Phase 1 goal: ₱110,000'},
+    {label:'Harvard fund',amt:Math.round(savingsAmt*0.25),note:'Phase 2 goal: ₱500,000+'}];
+  document.getElementById('budget-reco').innerHTML=reco.map(r=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--border-soft)">
+      <div><div style="font-size:13px;color:var(--text-1)">${r.label}</div><div style="font-size:11px;color:var(--text-2)">${r.note}</div></div>
+      <div style="font-size:13px;font-weight:500;color:var(--lav-deep)">${php(r.amt)}/mo</div>
+    </div>`).join('');
+}
+
+// BUSINESS
+function setBiz(tab){
+  D.activeBiz=tab;
+  var btc=document.getElementById('bt-caziel');if(btc){btc.className='biz-tab'+(tab==='caziel'?' active-tab':'');}
+  var bte=document.getElementById('bt-eumi');if(bte){bte.className='biz-tab'+(tab==='eumi'?' active-tab':'');}
+  var bti=document.getElementById('bt-informal');if(bti){bti.className='biz-tab'+(tab==='informal'?' active-tab':'');}
+  renderBiz();
+}
+
+function renderBiz(){
+  var tab=D.activeBiz;
+  if(!D.biz[tab])D.biz[tab]=[];
+  var entries=D.biz[tab]||[];
+  var inc=entries.filter(x=>x.type==='income').reduce((s,x)=>s+x.amt,0);
+  var exp=entries.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amt,0);
+  document.getElementById('biz-metrics').innerHTML=`
+    <div class="metric"><div class="mlabel">Total income</div><div class="mval" style="color:#27500A">${php(inc)}</div></div>
+    <div class="metric"><div class="mlabel">Total expenses</div><div class="mval" style="color:#A32D2D">${php(exp)}</div></div>
+    <div class="metric"><div class="mlabel">Net profit</div><div class="mval" style="color:${inc-exp>=0?'#27500A':'#A32D2D'}">${php(inc-exp)}</div></div>`;
+  document.getElementById('biz-tbody').innerHTML=entries.slice().reverse().map(e=>`<tr>
+    <td style="overflow:hidden;text-overflow:ellipsis">${esc(e.desc)}</td>
+    <td><span class="tag ${e.type==='income'?'inc':'exp-neg'}">${e.type}</span></td>
+    <td style="font-weight:500;color:${e.type==='income'?'#27500A':'#A32D2D'}">${e.type==='income'?'+':'-'}${php(e.amt)}</td>
+    <td><button class="dbtn" onclick="delBiz('${e.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+  </tr>`).join('')||'<tr><td colspan="4"><div class="empty">No entries yet</div></td></tr>';
+  var btc=document.getElementById('bt-caziel');if(btc){btc.className='biz-tab'+(tab==='caziel'?' active-tab':'');}
+  var bte=document.getElementById('bt-eumi');if(bte){bte.className='biz-tab'+(tab==='eumi'?' active-tab':'');}
+  var bti=document.getElementById('bt-informal');if(bti){bti.className='biz-tab'+(tab==='informal'?' active-tab':'');}
+}
+
+function addBizEntry(){
+  var desc=document.getElementById('biz-desc').value.trim();
+  var type=document.getElementById('biz-type').value;
+  var amt=parseFloat(document.getElementById('biz-amt').value);
+  if(!desc||!amt||amt<=0)return;
+  D.biz[D.activeBiz].push({id:gid(),desc,type,amt});
+  document.getElementById('biz-desc').value='';
+  document.getElementById('biz-amt').value='';
+  save();renderBiz();renderDash();
+}
+
+function delBiz(id){D.biz[D.activeBiz]=D.biz[D.activeBiz].filter(x=>x.id!==id);save();renderBiz();renderDash();}
+
+// INSURANCE
+function renderIns(){
+  var tbody=document.getElementById('ins-tbody');
+  tbody.innerHTML=D.insurance.length?D.insurance.map(p=>`<tr>
+    <td style="overflow:hidden;text-overflow:ellipsis">${esc(p.name)}</td>
+    <td>${esc(p.provider)}</td>
+    <td>${php(p.premium)}</td>
+    <td style="font-size:11px">${p.due||'—'}</td>
+    <td><button class="dbtn" onclick="delIns('${p.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+  </tr>`).join(''):`<tr><td colspan="5"><div class="empty">No policies added yet</div></td></tr>`;
+}
+
+function addIns(){
+  var name=document.getElementById('ins-name').value.trim();
+  var provider=document.getElementById('ins-provider').value.trim();
+  var premium=parseFloat(document.getElementById('ins-premium').value)||0;
+  var due=document.getElementById('ins-due').value;
+  if(!name)return;
+  D.insurance.push({id:gid(),name,provider,premium,due});
+  document.getElementById('ins-name').value='';
+  document.getElementById('ins-provider').value='';
+  document.getElementById('ins-premium').value='';
+  save();renderIns();
+}
+
+function delIns(id){D.insurance=D.insurance.filter(x=>x.id!==id);save();renderIns();}
+
+function setFloor(){
+  var v=parseFloat(document.getElementById('floor-input').value);
+  if(!v||v<=0)return;
+  D.floorSalary=v;
+  save();renderDash();
+}
+
+// ECOMMERCE
+function renderEcom(){
+  var filter=document.getElementById('ecom-filter')?document.getElementById('ecom-filter').value:'All';
+  var list=filter==='All'?D.ecom:D.ecom.filter(x=>x.platform===filter);
+  var totalGross=list.reduce((s,x)=>s+x.gross,0);
+  var totalFees=list.reduce((s,x)=>s+x.fees,0);
+  var totalNet=list.reduce((s,x)=>s+x.net,0);
+  var now=new Date();var curMo=now.getMonth();var curYr=now.getFullYear();
+  var monthNet=D.ecom.filter(x=>{var d=new Date(x.date);return d.getMonth()===curMo&&d.getFullYear()===curYr;}).reduce((s,x)=>s+x.net,0);
+  var el=document.getElementById('ecom-metrics');
+  if(el)el.innerHTML=`
+    <div class="metric"><div class="mlabel">This month (net)</div><div class="mval" style="color:#27500A">${php(monthNet)}</div><div class="msub">current month payouts</div></div>
+    <div class="metric"><div class="mlabel">Total gross</div><div class="mval">${php(totalGross)}</div><div class="msub">all time</div></div>
+    <div class="metric"><div class="mlabel">Total fees</div><div class="mval" style="color:#A32D2D">${php(totalFees)}</div><div class="msub">platform charges</div></div>
+    <div class="metric"><div class="mlabel">Total net</div><div class="mval" style="color:#27500A">${php(totalNet)}</div><div class="msub">what you actually got</div></div>`;
+  var tbody=document.getElementById('ecom-tbody');
+  if(!tbody)return;
+  var rows=list.slice().reverse();
+  tbody.innerHTML=rows.length?rows.map(e=>`<tr>
+    <td><span class="tag neutral">${esc(e.platform)}</span></td>
+    <td style="font-weight:500;color:#27500A">${php(e.gross)}</td>
+    <td style="color:#A32D2D">${php(e.fees)}</td>
+    <td style="font-weight:600;color:#3C3489">${php(e.net)}</td>
+    <td style="font-size:11px;color:var(--text-2)">${e.date||'—'}</td>
+    <td><button class="dbtn" onclick="delEcom('${e.id}')"><i class="ti ti-trash"></i></button></td>
+  </tr>`).join(''):`<tr><td colspan="6"><div class="empty">No payouts logged yet. Log your first ecommerce withdrawal above.</div></td></tr>`;
+}
+
+function addEcom(){
+  var platform=document.getElementById('ecom-platform').value;
+  var gross=parseFloat(document.getElementById('ecom-gross').value)||0;
+  var fees=parseFloat(document.getElementById('ecom-fees').value)||0;
+  var date=document.getElementById('ecom-date').value;
+  if(!gross||gross<=0)return;
+  var net=gross-fees;
+  D.ecom.push({id:gid(),platform,gross,fees,net,date});
+  document.getElementById('ecom-gross').value='';
+  document.getElementById('ecom-fees').value='';
+  save();renderEcom();renderDash();
+}
+
+function delEcom(id){D.ecom=D.ecom.filter(x=>x.id!==id);save();renderEcom();renderDash();}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// LEDGER — auto-fed from bank transactions
+var activeLedgerTab='personal';
+var ledgerTabNames={personal:'Personal',caziel:'Caziél',eumi:'Eumi',informal:'Informal Biz'};
+
+function setLedger(tab){
+  activeLedgerTab=tab;
+  document.querySelectorAll('.ledger-tab').forEach(b=>b.classList.remove('active-tab'));
+  var el=document.getElementById('lt-'+tab);if(el)el.classList.add('active-tab');
+  renderLedger();
+}
+
+function renderLedger(){
+  var tab=activeLedgerTab;
+  var titleEl=document.getElementById('ledger-title');
+  if(titleEl)titleEl.textContent=(ledgerTabNames[tab]||tab)+' Ledger';
+  var entries=(D.autoLedger[tab]||[]).slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
+  var inc=entries.filter(x=>x.type==='credit').reduce((s,x)=>s+x.amt,0);
+  var exp=entries.filter(x=>x.type==='debit').reduce((s,x)=>s+x.amt,0);
+  var balance=inc-exp;
+  var el=document.getElementById('ledger-metrics');
+  if(el)el.innerHTML=`
+    <div class="metric"><div class="mlabel">Total Credits</div><div class="mval" style="color:#27500A">${php(inc)}</div><div class="msub">money in</div></div>
+    <div class="metric"><div class="mlabel">Total Debits</div><div class="mval" style="color:#A32D2D">${php(exp)}</div><div class="msub">money out</div></div>
+    <div class="metric"><div class="mlabel">Net Balance</div><div class="mval" style="color:${balance>=0?'#27500A':'#A32D2D'}">${php(balance)}</div><div class="msub">${balance>=0?'surplus':'deficit'}</div></div>`;
+  var tbody=document.getElementById('ledger-tbody');
+  if(!tbody)return;
+  // Build running balance forward
+  var running=0;
+  var rows=entries.map(e=>{
+    running+=e.type==='credit'?e.amt:-e.amt;
+    return{...e,runBal:running};
+  }).reverse();
+  tbody.innerHTML=rows.length?rows.map(e=>`<tr>
+    <td style="font-size:10px;color:var(--text-3)">${e.date||'—'}</td>
+    <td style="font-size:10px;color:var(--text-3);overflow:hidden;text-overflow:ellipsis">${esc(e.bankName||'—')}</td>
+    <td style="overflow:hidden;text-overflow:ellipsis">${esc(e.desc)}</td>
+    <td><span class="tag" style="background:${e.type==='credit'?'var(--inc-bg)':'var(--exp-bg)'};color:${e.type==='credit'?'var(--inc-txt)':'var(--exp-txt)'}">${e.type}</span></td>
+    <td style="font-weight:500;color:${e.type==='credit'?'#27500A':'#A32D2D'}">${e.type==='credit'?'+':'-'}${php(e.amt)}</td>
+    <td style="font-weight:500;font-size:11px;color:${e.runBal>=0?'#27500A':'#A32D2D'}">${php(e.runBal)}</td>
+  </tr>`).join(''):`<tr><td colspan="6"><div class="empty">No transactions yet — add bank accounts and start logging to see your ${ledgerTabNames[tab]} ledger here.</div></td></tr>`;
+}
+
+function exportLedger(){
+  var tab=activeLedgerTab;
+  var entries=(D.autoLedger[tab]||[]).slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
+  var running=0;
+  var rows=entries.map(e=>{running+=e.type==='credit'?e.amt:-e.amt;return{...e,runBal:running};});
+  var csv='Date,Account,Description,Type,Amount,Running Balance\n';
+  csv+=rows.map(e=>[
+    e.date||'',
+    '"'+(e.bankName||'').replace(/"/g,'""')+'"',
+    '"'+e.desc.replace(/"/g,'""')+'"',
+    e.type,
+    (e.type==='credit'?'+':'-')+e.amt.toFixed(2),
+    e.runBal.toFixed(2)
+  ].join(',')).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='ledger_'+(ledgerTabNames[tab]||tab).toLowerCase().replace(/ /g,'_')+'_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+
+// ══ AUTH ══
+// Credentials stored as simple hashes (not plain text in DOM)
+function simpleHash(str){
+  var h=5381;
+  for(var i=0;i<str.length;i++){h=((h<<5)+h)+str.charCodeAt(i);h=h&h;}
+  return h.toString(36);
+}
+var AUTH={
+  user: simpleHash('norlainie'),
+  pass: simpleHash('Cassius112022'),
+  pin:  simpleHash('112022')
+};
+var pinBuffer='';
+var loginPassed=false;
+
+function checkLogin(){
+  var u=document.getElementById('login-user').value.trim();
+  var p=document.getElementById('login-pass').value;
+  var err=document.getElementById('login-err');
+  if(simpleHash(u)===AUTH.user && simpleHash(p)===AUTH.pass){
+    err.textContent='';
+    document.getElementById('login-step-1').classList.remove('active');
+    document.getElementById('login-step-2').classList.add('active');
+    buildPinPad();
+  } else {
+    err.textContent='Incorrect username or password.';
+    document.getElementById('login-pass').value='';
+  }
+}
+
+function buildPinPad(){
+  pinBuffer='';
+  renderPinDots();
+  var grid=document.getElementById('pin-grid');
+  grid.innerHTML='';
+  var keys=['1','2','3','4','5','6','7','8','9','','0','del'];
+  keys.forEach(function(k){
+    var btn=document.createElement('button');
+    if(k===''){btn.className='pin-key empty';btn.disabled=true;}
+    else if(k==='del'){btn.className='pin-key del';btn.innerHTML='&#9003;';btn.onclick=function(){pinDel();};}
+    else{btn.className='pin-key';btn.textContent=k;btn.onclick=function(){pinPress(k);};}
+    grid.appendChild(btn);
+  });
+}
+
+function renderPinDots(){
+  var d=document.getElementById('pin-dots');
+  d.innerHTML='';
+  for(var i=0;i<6;i++){
+    var dot=document.createElement('div');
+    dot.className='pin-dot'+(i<pinBuffer.length?' filled':'');
+    d.appendChild(dot);
+  }
+}
+
+function pinPress(k){
+  if(pinBuffer.length>=6)return;
+  pinBuffer+=k;
+  renderPinDots();
+  if(pinBuffer.length===6)setTimeout(checkPin,120);
+}
+
+function pinDel(){
+  pinBuffer=pinBuffer.slice(0,-1);
+  renderPinDots();
+  document.getElementById('pin-err').textContent='';
+}
+
+function checkPin(){
+  if(simpleHash(pinBuffer)===AUTH.pin){
+    loginPassed=true;
+    localStorage.setItem('nfh_ever_auth','1');
+    var screen=document.getElementById('login-screen');
+    screen.classList.add('fade-out');
+    setTimeout(function(){screen.style.display='none';},360);
+    sessionStorage.setItem('nfh_auth','1');
+  } else {
+    document.getElementById('pin-err').textContent='Incorrect PIN. Try again.';
+    pinBuffer='';
+    renderPinDots();
+  }
+}
+
+// Allow Enter key on login form
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(document.getElementById('login-step-1').classList.contains('active'))checkLogin();
+  }
+});
+
+// ── LOCK on visibility change (when app is minimized / tab hidden) ──
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState==='hidden'){
+    sessionStorage.removeItem('nfh_auth');
+    loginPassed=false;
+  }
+  if(document.visibilityState==='visible' && !loginPassed){
+    var screen=document.getElementById('login-screen');
+    if(screen){
+      screen.style.display='flex';
+      screen.classList.remove('fade-out');
+      pinBuffer='';
+      var step1=document.getElementById('login-step-1');
+      var step2=document.getElementById('login-step-2');
+      var everLoggedIn=localStorage.getItem('nfh_ever_auth');
+      if(everLoggedIn){
+        // Already logged in before — go straight to PIN
+        step1.classList.remove('active');
+        step2.classList.add('active');
+        buildPinPad();
+      } else {
+        // First time — full username + password
+        step1.classList.add('active');
+        step2.classList.remove('active');
+        document.getElementById('login-user').value='';
+        document.getElementById('login-pass').value='';
+        document.getElementById('login-err').textContent='';
+      }
+      document.getElementById('pin-err').textContent='';
+    }
+  }
+});
+
+// On page load — decide which login step to show
+(function(){
+  var step1=document.getElementById('login-step-1');
+  var step2=document.getElementById('login-step-2');
+  if(localStorage.getItem('nfh_ever_auth')){
+    step2.classList.add('active');
+    buildPinPad();
+  } else {
+    step1.classList.add('active');
+  }
+})();
+
+load();
+</script>
+
+<div id="sync-toast" style="position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(10px);background:rgba(30,30,30,0.88);color:#fff;font-size:12px;font-family:'Montserrat',sans-serif;font-weight:500;padding:8px 18px;border-radius:20px;opacity:0;transition:opacity .3s ease,transform .3s ease;pointer-events:none;z-index:9998;white-space:nowrap;display:flex;align-items:center;gap:6px;"><i class="ti ti-refresh" style="font-size:13px;color:#A8E6CF"></i> Synced from another device</div>
+</body>
+</html>
